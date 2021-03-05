@@ -54,7 +54,7 @@ const Routes = () => (
     <ScrollToTop>
       <Switch>
         <Route exact path="/">
-          <Redirect to="/auth/sign-in" />
+          <Redirect to="/dashboard/reports/earnings" />
         </Route>
         {/* {childRoutes(LandingLayout, landingRoutes)} */}
         {childRoutes(DashboardLayout, dashboardRoutes)}
