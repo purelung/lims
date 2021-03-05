@@ -64,7 +64,10 @@ const SignIn = () => (
               />
             </div>
             <div className="text-center mt-3">
-              <Link to="/store-date/sales">
+              <Link
+                to="/.auth/login/google"
+                query={{ post_login_redirect_uri: "/dashboard/store-data" }}
+              >
                 <Button color="primary" size="lg">
                   Sign in
                 </Button>

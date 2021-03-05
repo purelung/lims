@@ -457,12 +457,12 @@ const formPluginsRoutes = {
 };
 
 const advancedTablesRoutes = {
-  path: "/store-data",
+  path: "/dashboard/store-data",
   name: "Store Data",
   icon: ListIcon,
   children: [
     {
-      path: "/store-date/sales",
+      path: "/dashboard/store-date/sales",
       name: "Sales",
       component: PaginationTables,
     },
@@ -485,14 +485,14 @@ const advancedTablesRoutes = {
 };
 
 const chartRoutes = {
-  path: "/reports",
+  path: "/dashboard/reports",
   name: "Reports",
   icon: PieChartIcon,
   // badgeColor: "primary",
   // badgeText: "New",
   children: [
     {
-      path: "/reports/earnings",
+      path: "/dashboard/reports/earnings",
       name: "Earnings",
       component: Chartjs,
     },
