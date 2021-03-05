@@ -64,14 +64,16 @@ const SignIn = () => (
               />
             </div>
             <div className="text-center mt-3">
-              <Link
-                to="/.auth/login/google"
-                query={{ post_login_redirect_uri: "/dashboard/store-data" }}
+              <Button
+                color="primary"
+                size="lg"
+                onClick={() =>
+                  (window.location.href =
+                    "/.auth/login/google?post_login_redirect_uri=%2Fdashboard%2Fstore-data%2Fsales")
+                }
               >
-                <Button color="primary" size="lg">
-                  Sign in
-                </Button>
-              </Link>
+                Sign in
+              </Button>
             </div>
           </Form>
         </div>

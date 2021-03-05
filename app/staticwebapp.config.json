@@ -4,5 +4,11 @@
             "route": "/dashboard/*",
             "allowedRoles": ["authenticated"]
         }
-    ]
+    ],
+    "responseOverrides": {
+        "401": {
+            "redirect": "/auth/sign-in",
+            "statusCode": 302
+        }
+    }
 }
