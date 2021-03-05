@@ -1,0 +1,11 @@
+/*!
+ * SmartWizard v4.4.1
+ * The awesome jQuery step wizard plugin with Bootstrap support
+ * http://www.techlaboratory.net/smartwizard
+ *
+ * Created by Dipu Raj
+ * http://dipuraj.me
+ *
+ * Licensed under the terms of the MIT License
+ * https://github.com/techlab/SmartWizard/blob/master/LICENSE
+ */
