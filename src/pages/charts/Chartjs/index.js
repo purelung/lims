@@ -11,13 +11,13 @@ import Polar from "./Polar";
 
 const Chartjs = () => (
   <Container fluid className="p-0">
-    <h1 className="h3 mb-3">Chart.js</h1>
+    <h1 className="h3 mb-3">Earnings</h1>
 
     <Row>
       <Col lg="6">
         <Line />
       </Col>
-      <Col lg="6">
+      {/* <Col lg="6">
         <Bar />
       </Col>
       <Col lg="6">
@@ -31,7 +31,7 @@ const Chartjs = () => (
       </Col>
       <Col lg="6">
         <Polar />
-      </Col>
+      </Col> */}
     </Row>
   </Container>
 );

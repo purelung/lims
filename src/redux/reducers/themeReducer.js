@@ -8,7 +8,7 @@ const themes = {
     success: "#5fc27e",
     info: "#5b7dff",
     warning: "#fcc100",
-    danger: "#f44455"
+    danger: "#f44455",
   },
   corporate: {
     primary: "#3A89FF",
@@ -17,7 +17,7 @@ const themes = {
     success: "#4bbf73",
     info: "#1f9bcf",
     warning: "#f0ad4e",
-    danger: "#d9534f"
+    danger: "#d9534f",
   },
   modern: {
     primary: "#2c7be5",
@@ -26,13 +26,13 @@ const themes = {
     success: "#4caf50",
     info: "#47bac1",
     warning: "#ff9800",
-    danger: "#e51c23"
-  }
+    danger: "#e51c23",
+  },
 };
 
 const initialState = {
-  currentTheme: themes.classic,
-  themes: themes
+  currentTheme: themes.modern,
+  themes: themes,
 };
 
 export default function reducer(state = initialState, actions) {
@@ -40,7 +40,7 @@ export default function reducer(state = initialState, actions) {
     case types.THEME_TOGGLE:
       return {
         ...state,
-        currentTheme: state.themes[actions.payload]
+        currentTheme: state.themes[actions.payload],
       };
 
     default:

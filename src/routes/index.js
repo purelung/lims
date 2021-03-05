@@ -13,7 +13,7 @@ import {
   Monitor as MonitorIcon,
   PieChart as PieChartIcon,
   Sliders as SlidersIcon,
-  Users as UsersIcon
+  Users as UsersIcon,
 } from "react-feather";
 
 // Landing
@@ -113,7 +113,7 @@ const landingRoutes = {
   path: "/",
   name: "Landing Page",
   component: Landing,
-  children: null
+  children: null,
 };
 
 const dashboardRoutes = {
@@ -128,31 +128,31 @@ const dashboardRoutes = {
     {
       path: "/dashboard/default",
       name: "Default",
-      component: Default
+      component: Default,
     },
     {
       path: "/dashboard/analytics",
       name: "Analytics",
-      component: Analytics
+      component: Analytics,
     },
     {
       path: "/dashboard/e-commerce",
       name: "E-commerce",
-      component: Ecommerce
+      component: Ecommerce,
     },
     {
       path: "/dashboard/social",
       name: "Social",
-      component: Social
+      component: Social,
     },
     {
       path: "/dashboard/crypto",
       name: "Crypto",
       component: Crypto,
       badgeColor: "primary",
-      badgeText: "New"
-    }
-  ]
+      badgeText: "New",
+    },
+  ],
 };
 
 const pageRoutes = {
@@ -163,51 +163,51 @@ const pageRoutes = {
     {
       path: "/pages/profile",
       name: "Profile",
-      component: Profile
+      component: Profile,
     },
     {
       path: "/pages/settings",
       name: "Settings",
-      component: Settings
+      component: Settings,
     },
     {
       path: "/pages/clients",
       name: "Clients",
-      component: Clients
+      component: Clients,
     },
     {
       path: "/pages/projects",
       name: "Projects",
-      component: Projects
+      component: Projects,
     },
     {
       path: "/pages/invoice",
       name: "Invoice",
-      component: Invoice
+      component: Invoice,
     },
     {
       path: "/pages/pricing",
       name: "Pricing",
-      component: Pricing
+      component: Pricing,
     },
     {
       path: "/pages/tasks",
       name: "Tasks",
-      component: Tasks
+      component: Tasks,
     },
     {
       path: "/pages/chat",
       name: "Chat",
       component: Chat,
       badgeColor: "primary",
-      badgeText: "New"
+      badgeText: "New",
     },
     {
       path: "/pages/blank",
       name: "Blank Page",
-      component: Blank
-    }
-  ]
+      component: Blank,
+    },
+  ],
 };
 
 const authRoutes = {
@@ -220,29 +220,29 @@ const authRoutes = {
     {
       path: "/auth/sign-in",
       name: "Sign In",
-      component: SignIn
+      component: SignIn,
     },
     {
       path: "/auth/sign-up",
       name: "Sign Up",
-      component: SignUp
+      component: SignUp,
     },
     {
       path: "/auth/reset-password",
       name: "Reset Password",
-      component: ResetPassword
+      component: ResetPassword,
     },
     {
       path: "/auth/404",
       name: "404 Page",
-      component: Page404
+      component: Page404,
     },
     {
       path: "/auth/500",
       name: "500 Page",
-      component: Page500
-    }
-  ]
+      component: Page500,
+    },
+  ],
 };
 
 const layoutRoutes = {
@@ -253,38 +253,38 @@ const layoutRoutes = {
     {
       path: "/layouts/sidebar-sticky",
       name: "Sticky Sidebar",
-      component: SidebarSticky
+      component: SidebarSticky,
     },
     {
       path: "/layouts/sidebar-collapsed",
       name: "Sidebar Collapsed",
-      component: SidebarCollapsed
+      component: SidebarCollapsed,
     },
     {
       path: "/layouts/boxed",
       name: "Boxed Layout",
-      component: Boxed
+      component: Boxed,
     },
     {
       path: "/layouts/theme-classic",
       name: "Classic Theme",
-      component: ThemeClassic
+      component: ThemeClassic,
     },
     {
       path: "/layouts/theme-corporate",
       name: "Corporate Theme",
       component: ThemeCorporate,
       badgeColor: "primary",
-      badgeText: "New"
+      badgeText: "New",
     },
     {
       path: "/layouts/theme-modern",
       name: "Modern Theme",
       component: ThemeModern,
       badgeColor: "primary",
-      badgeText: "New"
-    }
-  ]
+      badgeText: "New",
+    },
+  ],
 };
 
 const documentationRoutes = {
@@ -295,24 +295,24 @@ const documentationRoutes = {
     {
       path: "/docs/introduction",
       name: "Introduction",
-      component: Introduction
+      component: Introduction,
     },
     {
       path: "/docs/installation",
       name: "Getting Started",
-      component: Installation
+      component: Installation,
     },
     {
       path: "/docs/plugins",
       name: "Plugins",
-      component: Plugins
+      component: Plugins,
     },
     {
       path: "/docs/changelog",
       name: "Changelog",
-      component: Changelog
-    }
-  ]
+      component: Changelog,
+    },
+  ],
 };
 
 const uiRoutes = {
@@ -324,56 +324,56 @@ const uiRoutes = {
     {
       path: "/ui/alerts",
       name: "Alerts",
-      component: Alerts
+      component: Alerts,
     },
     {
       path: "/ui/buttons",
       name: "Buttons",
-      component: Buttons
+      component: Buttons,
     },
     {
       path: "/ui/cards",
       name: "Cards",
-      component: Cards
+      component: Cards,
     },
     {
       path: "/ui/carousel",
       name: "Carousel",
-      component: Carousel
+      component: Carousel,
     },
     {
       path: "/ui/embed-video",
       name: "Embed Video",
-      component: EmbedVideo
+      component: EmbedVideo,
     },
     {
       path: "/ui/general",
       name: "General",
       component: General,
       badgeColor: "info",
-      badgeText: "10+"
+      badgeText: "10+",
     },
     {
       path: "/ui/grid",
       name: "Grid",
-      component: Grid
+      component: Grid,
     },
     {
       path: "/ui/modals",
       name: "Modals",
-      component: Modals
+      component: Modals,
     },
     {
       path: "/ui/tabs",
       name: "Tabs",
-      component: Tabs
+      component: Tabs,
     },
     {
       path: "/ui/typography",
       name: "Typography",
-      component: Typography
-    }
-  ]
+      component: Typography,
+    },
+  ],
 };
 
 const iconRoutes = {
@@ -386,14 +386,14 @@ const iconRoutes = {
     {
       path: "/icons/feather",
       name: "Feather",
-      component: Feather
+      component: Feather,
     },
     {
       path: "/icons/font-awesome",
       name: "Font Awesome",
-      component: FontAwesome
-    }
-  ]
+      component: FontAwesome,
+    },
+  ],
 };
 
 const formRoutes = {
@@ -404,19 +404,19 @@ const formRoutes = {
     {
       path: "/forms/layouts",
       name: "Layouts",
-      component: Layouts
+      component: Layouts,
     },
     {
       path: "/forms/basic-inputs",
       name: "Basic Inputs",
-      component: BasicInputs
+      component: BasicInputs,
     },
     {
       path: "/forms/input-groups",
       name: "Input Groups",
-      component: InputGroups
-    }
-  ]
+      component: InputGroups,
+    },
+  ],
 };
 
 const tableRoutes = {
@@ -424,7 +424,7 @@ const tableRoutes = {
   name: "Tables",
   icon: ListIcon,
   component: BootstrapTables,
-  children: null
+  children: null,
 };
 
 const formPluginsRoutes = {
@@ -436,74 +436,74 @@ const formPluginsRoutes = {
     {
       path: "/form-plugins/advanced-inputs",
       name: "Advanced Inputs",
-      component: AdvancedInputs
+      component: AdvancedInputs,
     },
     {
       path: "/form-plugins/editors",
       name: "Editors",
-      component: Editors
+      component: Editors,
     },
     {
       path: "/form-plugins/validation",
       name: "Validation",
-      component: Validation
+      component: Validation,
     },
     {
       path: "/form-plugins/wizard",
       name: "Wizard",
-      component: Wizard
-    }
-  ]
+      component: Wizard,
+    },
+  ],
 };
 
 const advancedTablesRoutes = {
-  path: "/advanced-tables",
-  name: "Advanced Tables",
+  path: "/store-data",
+  name: "Store Data",
   icon: ListIcon,
   children: [
     {
-      path: "/advanced-tables/pagination",
-      name: "Pagination",
-      component: PaginationTables
+      path: "/store-date/sales",
+      name: "Sales",
+      component: PaginationTables,
     },
-    {
-      path: "/advanced-tables/row-selection",
-      name: "Row Selection",
-      component: RowSelectionTables
-    },
-    {
-      path: "/advanced-tables/expandable-rows",
-      name: "Expandable Rows",
-      component: ExpandableRowsTables
-    },
-    {
-      path: "/advanced-tables/export-csv",
-      name: "Export CSV",
-      component: ExportCsvTables
-    }
-  ]
+    // {
+    //   path: "/store-date/sales",
+    //   name: "Sales",
+    //   component: RowSelectionTables,
+    // },
+    // {
+    //   path: "/store-date/employees",
+    //   name: "Employees",
+    //   component: ExpandableRowsTables,
+    // },
+    // {
+    //   path: "/store-date/stores",
+    //   name: "Stores",
+    //   component: ExportCsvTables,
+    // },
+  ],
 };
 
 const chartRoutes = {
-  path: "/charts",
-  name: "Charts",
+  path: "/reports",
+  name: "Reports",
   icon: PieChartIcon,
-  badgeColor: "primary",
-  badgeText: "New",
+  // badgeColor: "primary",
+  // badgeText: "New",
   children: [
     {
-      path: "/charts/chartjs",
-      name: "Chart.js",
-      component: Chartjs
+      path: "/reports/earnings",
+      name: "Earnings",
+      component: Chartjs,
     },
-    {
-      path: "/charts/apexcharts",
-      name: "ApexCharts",
-      component: ApexCharts,
-      badgeColor: "primary",
-      badgeText: "New"
-    }
-  ]
+    // {
+    //   path: "/charts/apexcharts",
+    //   name: "ApexCharts",
+    //   component: ApexCharts,
+    //   badgeColor: "primary",
+    //   badgeText: "New",
+    // },
+  ],
 };
 
 const notificationsRoutes = {
@@ -511,7 +511,7 @@ const notificationsRoutes = {
   name: "Notifications",
   icon: Bellicon,
   component: Notifications,
-  children: null
+  children: null,
 };
 
 const mapRoutes = {
@@ -522,14 +522,14 @@ const mapRoutes = {
     {
       path: "/maps/google-maps",
       name: "Google Maps",
-      component: GoogleMaps
+      component: GoogleMaps,
     },
     {
       path: "/maps/vector-maps",
       name: "Vector Maps",
-      component: VectorMaps
-    }
-  ]
+      component: VectorMaps,
+    },
+  ],
 };
 
 const calendarRoutes = {
@@ -537,7 +537,7 @@ const calendarRoutes = {
   name: "Calendar",
   icon: CalendarIcon,
   component: Calendar,
-  children: null
+  children: null,
 };
 
 // This route is not visisble in the sidebar
@@ -548,9 +548,9 @@ const privateRoutes = {
     {
       path: "/private/blank",
       name: "Blank Page",
-      component: Blank
-    }
-  ]
+      component: Blank,
+    },
+  ],
 };
 
 // Dashboard specific routes
@@ -569,7 +569,7 @@ export const dashboard = [
   notificationsRoutes,
   mapRoutes,
   calendarRoutes,
-  privateRoutes
+  privateRoutes,
 ];
 
 // Landing specific routes
@@ -580,19 +580,19 @@ export const page = [authRoutes];
 
 // All routes
 export default [
-  dashboardRoutes,
-  pageRoutes,
+  // dashboardRoutes,
+  // pageRoutes,
   authRoutes,
-  layoutRoutes,
-  documentationRoutes,
-  uiRoutes,
-  iconRoutes,
-  formRoutes,
-  tableRoutes,
-  formPluginsRoutes,
+  // layoutRoutes,
+  // documentationRoutes,
+  // uiRoutes,
+  // iconRoutes,
+  // formRoutes,
+  // tableRoutes,
+  // formPluginsRoutes,
   advancedTablesRoutes,
   chartRoutes,
-  notificationsRoutes,
-  mapRoutes,
-  calendarRoutes
+  // notificationsRoutes,
+  // mapRoutes,
+  // calendarRoutes,
 ];

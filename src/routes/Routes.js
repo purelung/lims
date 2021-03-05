@@ -1,9 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import {
   landing as landingRoutes,
   dashboard as dashboardRoutes,
-  page as pageRoutes
+  page as pageRoutes,
 } from "./index";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -22,7 +27,7 @@ const childRoutes = (Layout, routes) =>
           key={index}
           path={path}
           exact
-          render={props => (
+          render={(props) => (
             <Layout>
               <Component {...props} />
             </Layout>
@@ -35,7 +40,7 @@ const childRoutes = (Layout, routes) =>
         key={index}
         path={path}
         exact
-        render={props => (
+        render={(props) => (
           <Layout>
             <Component {...props} />
           </Layout>
@@ -48,7 +53,10 @@ const Routes = () => (
   <Router>
     <ScrollToTop>
       <Switch>
-        {childRoutes(LandingLayout, landingRoutes)}
+        <Route exact path="/">
+          <Redirect to="/auth/sign-in" />
+        </Route>
+        {/* {childRoutes(LandingLayout, landingRoutes)} */}
         {childRoutes(DashboardLayout, dashboardRoutes)}
         {childRoutes(AuthLayout, pageRoutes)}
         <Route

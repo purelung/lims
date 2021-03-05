@@ -9,7 +9,7 @@ import {
   FormGroup,
   Label,
   Input,
-  CustomInput
+  CustomInput,
 } from "reactstrap";
 
 import avatar from "../../assets/img/avatars/avatar.jpg";
@@ -64,7 +64,7 @@ const SignIn = () => (
               />
             </div>
             <div className="text-center mt-3">
-              <Link to="/dashboard/default">
+              <Link to="/store-date/sales">
                 <Button color="primary" size="lg">
                   Sign in
                 </Button>

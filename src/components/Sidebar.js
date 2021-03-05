@@ -12,6 +12,8 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import routes from "../routes/index";
 import avatar from "../assets/img/avatars/avatar.jpg";
 
+const sidebarRoutes = routes.filter((r) => r.name !== "Auth");
+
 const SidebarCategory = withRouter(
   ({
     name,
@@ -22,9 +24,9 @@ const SidebarCategory = withRouter(
     children,
     onClick,
     location,
-    to
+    to,
   }) => {
-    const getSidebarItemClass = path => {
+    const getSidebarItemClass = (path) => {
       return location.pathname.indexOf(path) !== -1 ||
         (location.pathname === "/" && path === "/dashboard")
         ? "active"
@@ -59,7 +61,7 @@ const SidebarCategory = withRouter(
 
 const SidebarItem = withRouter(
   ({ name, badgeColor, badgeText, icon: Icon, location, to }) => {
-    const getSidebarItemClass = path => {
+    const getSidebarItemClass = (path) => {
       return location.pathname === path ? "active" : "";
     };
 
@@ -85,19 +87,19 @@ class Sidebar extends React.Component {
     this.state = {};
   }
 
-  toggle = index => {
+  toggle = (index) => {
     // Collapse all elements
     Object.keys(this.state).forEach(
-      item =>
+      (item) =>
         this.state[index] ||
         this.setState(() => ({
-          [item]: false
+          [item]: false,
         }))
     );
 
     // Toggle selected element
-    this.setState(state => ({
-      [index]: !state[index]
+    this.setState((state) => ({
+      [index]: !state[index],
     }));
   };
 
@@ -105,13 +107,13 @@ class Sidebar extends React.Component {
     /* Open collapse element that matches current url */
     const pathName = this.props.location.pathname;
 
-    routes.forEach((route, index) => {
+    sidebarRoutes.forEach((route, index) => {
       const isActive = pathName.indexOf(route.path) === 0;
       const isOpen = route.open;
       const isHome = route.containsHome && pathName === "/" ? true : false;
 
       this.setState(() => ({
-        [index]: isActive || isOpen || isHome
+        [index]: isActive || isOpen || isHome,
       }));
     });
   }
@@ -131,11 +133,11 @@ class Sidebar extends React.Component {
           <PerfectScrollbar>
             <a className="sidebar-brand" href="/">
               <Box className="align-middle text-primary" size={24} />{" "}
-              <span className="align-middle">AppStack</span>
+              <span className="align-middle">ZeeReporting</span>
             </a>
 
             <ul className="sidebar-nav">
-              {routes.map((category, index) => {
+              {sidebarRoutes.map((category, index) => {
                 return (
                   <React.Fragment key={index}>
                     {category.header ? (
@@ -176,7 +178,7 @@ class Sidebar extends React.Component {
               })}
             </ul>
 
-            {!layout.isBoxed && !sidebar.isSticky ? (
+            {/* {!layout.isBoxed && !sidebar.isSticky ? (
               <div className="sidebar-bottom d-none d-lg-block">
                 <div className="media">
                   <img
@@ -198,7 +200,7 @@ class Sidebar extends React.Component {
                   </div>
                 </div>
               </div>
-            ) : null}
+            ) : null} */}
           </PerfectScrollbar>
         </div>
       </nav>
@@ -207,8 +209,8 @@ class Sidebar extends React.Component {
 }
 
 export default withRouter(
-  connect(store => ({
+  connect((store) => ({
     sidebar: store.sidebar,
-    layout: store.layout
+    layout: store.layout,
   }))(Sidebar)
 );

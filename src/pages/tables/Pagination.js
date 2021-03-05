@@ -10,10 +10,10 @@ const PaginationTable = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag="h5">Pagination</CardTitle>
-        <h6 className="card-subtitle text-muted">
+        <CardTitle tag="h5">Sales at varying stores</CardTitle>
+        {/* <h6 className="card-subtitle text-muted">
           Pagination by react-bootstrap-table2
-        </h6>
+        </h6> */}
       </CardHeader>
       <CardBody>
         <BootstrapTable
@@ -24,7 +24,7 @@ const PaginationTable = () => {
           bordered={false}
           pagination={paginationFactory({
             sizePerPage: 5,
-            sizePerPageList: [5, 10, 25, 50]
+            sizePerPageList: [5, 10, 25, 50],
           })}
         />
       </CardBody>
@@ -34,7 +34,7 @@ const PaginationTable = () => {
 
 const Tables = () => (
   <Container fluid className="p-0">
-    <h1 className="h3 mb-3">Pagination</h1>
+    <h1 className="h3 mb-3">Sales</h1>
 
     <PaginationTable />
   </Container>

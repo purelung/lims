@@ -15,7 +15,7 @@ import {
   ListGroup,
   ListGroupItem,
   Form,
-  Input
+  Input,
 } from "reactstrap";
 
 import {
@@ -27,7 +27,7 @@ import {
   PieChart,
   Settings,
   User,
-  UserPlus
+  UserPlus,
 } from "react-feather";
 
 import usFlag from "../assets/img/flags/us.png";
@@ -45,26 +45,26 @@ const notifications = [
     type: "important",
     title: "Update completed",
     description: "Restart server 12 to complete the update.",
-    time: "2h ago"
+    time: "2h ago",
   },
   {
     type: "default",
     title: "Lorem ipsum",
     description: "Aliquam ex eros, imperdiet vulputate hendrerit et.",
-    time: "6h ago"
+    time: "6h ago",
   },
   {
     type: "login",
     title: "Login from 192.186.1.1",
     description: "",
-    time: "6h ago"
+    time: "6h ago",
   },
   {
     type: "request",
     title: "New connection",
     description: "Anna accepted your request.",
-    time: "12h ago"
-  }
+    time: "12h ago",
+  },
 ];
 
 const messages = [
@@ -72,26 +72,26 @@ const messages = [
     name: "Ashley Briggs",
     avatar: avatar5,
     description: "Nam pretium turpis et arcu. Duis arcu tortor.",
-    time: "15m ago"
+    time: "15m ago",
   },
   {
     name: "Chris Wood",
     avatar: avatar1,
     description: "Curabitur ligula sapien euismod vitae.",
-    time: "2h ago"
+    time: "2h ago",
   },
   {
     name: "Stacie Hall",
     avatar: avatar4,
     description: "Pellentesque auctor neque nec urna.",
-    time: "4h ago"
+    time: "4h ago",
   },
   {
     name: "Bertha Martin",
     avatar: avatar3,
     description: "Aenean tellus metus, bibendum sed, posuere ac, mattis non.",
-    time: "5h ago"
-  }
+    time: "5h ago",
+  },
 ];
 
 const NavbarDropdown = ({
@@ -100,7 +100,7 @@ const NavbarDropdown = ({
   showBadge,
   header,
   footer,
-  icon: Icon
+  icon: Icon,
 }) => (
   <UncontrolledDropdown nav inNavbar className="mr-2">
     <DropdownToggle nav className="nav-icon dropdown-toggle">
@@ -157,7 +157,7 @@ const NavbarComponent = ({ dispatch }) => {
 
       <Collapse navbar>
         <Nav className="ml-auto" navbar>
-          <NavbarDropdown
+          {/* <NavbarDropdown
             header="New Messages"
             footer="Show all messages"
             icon={MessageCircle}
@@ -182,9 +182,9 @@ const NavbarComponent = ({ dispatch }) => {
                 />
               );
             })}
-          </NavbarDropdown>
+          </NavbarDropdown> */}
 
-          <NavbarDropdown
+          {/* <NavbarDropdown
             header="New Notifications"
             footer="Show all notifications"
             icon={BellOff}
@@ -215,9 +215,9 @@ const NavbarComponent = ({ dispatch }) => {
                 />
               );
             })}
-          </NavbarDropdown>
+          </NavbarDropdown> */}
 
-          <UncontrolledDropdown nav inNavbar className="mr-2">
+          {/* <UncontrolledDropdown nav inNavbar className="mr-2">
             <DropdownToggle nav caret className="nav-flag">
               <img src={usFlag} alt="English" />
             </DropdownToggle>
@@ -259,7 +259,7 @@ const NavbarComponent = ({ dispatch }) => {
                 <span className="align-middle">Dutch</span>
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
 
           <UncontrolledDropdown nav inNavbar>
             <span className="d-inline-block d-sm-none">
@@ -298,6 +298,6 @@ const NavbarComponent = ({ dispatch }) => {
   );
 };
 
-export default connect(store => ({
-  app: store.app
+export default connect((store) => ({
+  app: store.app,
 }))(NavbarComponent);

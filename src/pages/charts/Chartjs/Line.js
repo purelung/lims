@@ -18,7 +18,7 @@ const LineChart = ({ theme }) => {
       "Sep",
       "Oct",
       "Nov",
-      "Dec"
+      "Dec",
     ],
     datasets: [
       {
@@ -38,8 +38,8 @@ const LineChart = ({ theme }) => {
           2905,
           3838,
           2917,
-          3327
-        ]
+          3327,
+        ],
       },
       {
         label: "Orders",
@@ -59,60 +59,58 @@ const LineChart = ({ theme }) => {
           1554,
           2128,
           1466,
-          1827
-        ]
-      }
-    ]
+          1827,
+        ],
+      },
+    ],
   };
 
   const options = {
     maintainAspectRatio: false,
     legend: {
-      display: false
+      display: false,
     },
     tooltips: {
-      intersect: false
+      intersect: false,
     },
     hover: {
-      intersect: true
+      intersect: true,
     },
     plugins: {
       filler: {
-        propagate: false
-      }
+        propagate: false,
+      },
     },
     scales: {
       xAxes: [
         {
           reverse: true,
           gridLines: {
-            color: "rgba(0,0,0,0.05)"
-          }
-        }
+            color: "rgba(0,0,0,0.05)",
+          },
+        },
       ],
       yAxes: [
         {
           ticks: {
-            stepSize: 500
+            stepSize: 500,
           },
           display: true,
           borderDash: [5, 5],
           gridLines: {
             color: "rgba(0,0,0,0)",
-            fontColor: "#fff"
-          }
-        }
-      ]
-    }
+            fontColor: "#fff",
+          },
+        },
+      ],
+    },
   };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag="h5">Line Chart</CardTitle>
-        <h6 className="card-subtitle text-muted">
-          A line chart is a way of plotting data points on a line.
-        </h6>
+        <CardTitle tag="h5">Store Earnings</CardTitle>
+        <h6 className="card-subtitle text-muted">Month by month earnings</h6>
       </CardHeader>
       <CardBody>
         <div className="chart">
@@ -123,6 +121,6 @@ const LineChart = ({ theme }) => {
   );
 };
 
-export default connect(store => ({
-  theme: store.theme.currentTheme
+export default connect((store) => ({
+  theme: store.theme.currentTheme,
 }))(LineChart);
