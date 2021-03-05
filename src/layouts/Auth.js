@@ -16,7 +16,7 @@ const Auth = ({ children }) => (
         </Row>
       </Container>
     </Main>
-    <Settings />
+    {/* <Settings /> */}
   </React.Fragment>
 );
 
