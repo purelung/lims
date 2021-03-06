@@ -11,8 +11,23 @@ import {
   Input,
   CustomInput,
 } from "reactstrap";
+import { GoogleLogin } from "react-google-login";
 
 import avatar from "../../assets/img/avatars/avatar.jpg";
+
+const responseGoogle = (response) => {
+  console.log(response);
+
+  fetch("http://localhost:7071/api/auth", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: response.tokenId,
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+};
 
 const SignIn = () => (
   <React.Fragment>
@@ -64,7 +79,14 @@ const SignIn = () => (
               />
             </div>
             <div className="text-center mt-3">
-              <Button
+              <GoogleLogin
+                clientId="736706520895-rc52mtp1882sl8oss2o65oab8e5p7mr8.apps.googleusercontent.com"
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+              {/* <Button
                 color="primary"
                 size="lg"
                 onClick={() =>
@@ -73,7 +95,7 @@ const SignIn = () => (
                 }
               >
                 Sign in
-              </Button>
+              </Button> */}
             </div>
           </Form>
         </div>
