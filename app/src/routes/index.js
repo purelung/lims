@@ -462,7 +462,7 @@ const advancedTablesRoutes = {
   icon: ListIcon,
   children: [
     {
-      path: "/dashboard/store-date/sales",
+      path: "/dashboard/store-data/sales",
       name: "Sales",
       component: PaginationTables,
     },

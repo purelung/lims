@@ -1,12 +1,55 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card, CardBody, CardHeader, CardTitle, Container } from "reactstrap";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 
-import { tableData, tableColumns } from "./data.js";
+import { UserContext } from "../../contexts/UserContext";
 
 const PaginationTable = () => {
+  const { authToken } = useContext(UserContext);
+  const [customers, setCustomers] = useState([]);
+
+  const fetchCustomers = () => {
+    //localhost:7071
+    fetch("https://zeereportingapi.azurewebsites.net/api/getCustomers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`,
+      },
+      body: "",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setCustomers(data);
+      })
+      .catch((error) => console.log("TODO: toast"));
+  };
+
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const tableColumns = [
+    {
+      dataField: "id",
+      text: "ID",
+      sort: true,
+    },
+    {
+      dataField: "customerName",
+      text: "Customer Name",
+      sort: true,
+    },
+    {
+      dataField: "ownerName",
+      text: "Owner Name",
+      sort: true,
+    },
+  ];
+
   return (
     <Card>
       <CardHeader>
@@ -18,7 +61,7 @@ const PaginationTable = () => {
       <CardBody>
         <BootstrapTable
           keyField="name"
-          data={tableData}
+          data={customers}
           columns={tableColumns}
           bootstrap4
           bordered={false}
