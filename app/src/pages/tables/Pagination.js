@@ -7,16 +7,19 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { UserContext } from "../../contexts/UserContext";
 
 const PaginationTable = () => {
-  const { authToken } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [customers, setCustomers] = useState([]);
 
   const fetchCustomers = () => {
-    //localhost:7071
+    console.log("USAH: ");
+    console.log(user);
+    //https://zeereportingapi.azurewebsites.net
+    //http://localhost:7071
     fetch("https://zeereportingapi.azurewebsites.net/api/getCustomers", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${authToken}`,
+        Authorization: `Bearer ${user.authToken}`,
       },
       body: "",
     })

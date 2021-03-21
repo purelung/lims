@@ -17,13 +17,14 @@ import { UserContext } from "../../contexts/UserContext";
 import avatar from "../../assets/img/avatars/avatar.jpg";
 
 const SignIn = () => {
-  const { setAuthToken } = useContext(UserContext);
+  const { setUserData } = useContext(UserContext);
   let history = useHistory();
 
   const responseGoogle = (response) => {
     console.log(response);
 
-    //localhost:7071
+    //https://zeereportingapi.azurewebsites.net
+    //http://localhost:7071
     fetch("https://zeereportingapi.azurewebsites.net/api/auth", {
       method: "POST",
       headers: {
@@ -33,8 +34,14 @@ const SignIn = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log("DATA");
         console.log(data);
-        setAuthToken(data.token);
+        setUserData({
+          authToken: data.token,
+          name: response.profileObj.name,
+          email: response.profileObj.email,
+          imageUrl: response.profileObj.imageUrl,
+        });
         history.push("/dashboard/store-data/sales");
       })
       .catch((error) => {

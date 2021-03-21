@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../redux/actions/sidebarActions";
 
@@ -135,6 +136,8 @@ const NavbarDropdownItem = ({ icon, title, description, time, spacing }) => (
 );
 
 const NavbarComponent = ({ dispatch }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <Navbar color="white" light expand>
       <span
@@ -270,11 +273,11 @@ const NavbarComponent = ({ dispatch }) => {
             <span className="d-none d-sm-inline-block">
               <DropdownToggle nav caret>
                 <img
-                  src={avatar1}
+                  src={user.imageUrl}
                   className="avatar img-fluid rounded-circle mr-1"
-                  alt="Chris Wood"
+                  alt={user.name}
                 />
-                <span className="text-dark">Chris Wood</span>
+                <span className="text-dark">{user.name}</span>
               </DropdownToggle>
             </span>
             <DropdownMenu right>
@@ -282,13 +285,13 @@ const NavbarComponent = ({ dispatch }) => {
                 <User size={18} className="align-middle mr-2" />
                 Profile
               </DropdownItem>
-              <DropdownItem>
+              {/* <DropdownItem>
                 <PieChart size={18} className="align-middle mr-2" />
                 Analytics
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem>Settings & Privacy</DropdownItem>
-              <DropdownItem>Help</DropdownItem>
+              <DropdownItem>Help</DropdownItem> */}
               <DropdownItem>Sign out</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
