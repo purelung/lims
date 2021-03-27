@@ -130,28 +130,28 @@ const dashboardRoutes = {
       name: "Default",
       component: Default,
     },
-    {
-      path: "/dashboard/analytics",
-      name: "Analytics",
-      component: Analytics,
-    },
-    {
-      path: "/dashboard/e-commerce",
-      name: "E-commerce",
-      component: Ecommerce,
-    },
-    {
-      path: "/dashboard/social",
-      name: "Social",
-      component: Social,
-    },
-    {
-      path: "/dashboard/crypto",
-      name: "Crypto",
-      component: Crypto,
-      badgeColor: "primary",
-      badgeText: "New",
-    },
+    // {
+    //   path: "/dashboard/analytics",
+    //   name: "Analytics",
+    //   component: Analytics,
+    // },
+    // {
+    //   path: "/dashboard/e-commerce",
+    //   name: "E-commerce",
+    //   component: Ecommerce,
+    // },
+    // {
+    //   path: "/dashboard/social",
+    //   name: "Social",
+    //   component: Social,
+    // },
+    // {
+    //   path: "/dashboard/crypto",
+    //   name: "Crypto",
+    //   component: Crypto,
+    //   badgeColor: "primary",
+    //   badgeText: "New",
+    // },
   ],
 };
 
@@ -492,6 +492,11 @@ const chartRoutes = {
   // badgeText: "New",
   children: [
     {
+      path: "/dashboard/reports/sales",
+      name: "Sales",
+      component: PaginationTables,
+    },
+    {
       path: "/dashboard/reports/earnings",
       name: "Earnings",
       component: Chartjs,
@@ -590,7 +595,7 @@ export default [
   // formRoutes,
   // tableRoutes,
   // formPluginsRoutes,
-  advancedTablesRoutes,
+  //advancedTablesRoutes,
   chartRoutes,
   // notificationsRoutes,
   // mapRoutes,

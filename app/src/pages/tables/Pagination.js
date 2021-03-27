@@ -11,7 +11,6 @@ const PaginationTable = () => {
   const [customers, setCustomers] = useState([]);
 
   const fetchCustomers = () => {
-    console.log("USAH: ");
     console.log(user);
     //https://zeereportingapi.azurewebsites.net
     //http://localhost:7071
@@ -25,7 +24,6 @@ const PaginationTable = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setCustomers(data);
       })
       .catch((error) => console.log("TODO: toast"));

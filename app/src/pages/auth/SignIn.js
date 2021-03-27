@@ -1,27 +1,20 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-
-import {
-  Button,
-  Card,
-  CardBody,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  CustomInput,
-} from "reactstrap";
+import { Box } from "react-feather";
+import { Button, Form } from "reactstrap";
 import { GoogleLogin } from "react-google-login";
 import { UserContext } from "../../contexts/UserContext";
-
+import { Overlay, Spinner, showToast } from "../../components";
+import { shot } from "react-redux-toastr";
 import avatar from "../../assets/img/avatars/avatar.jpg";
 
 const SignIn = () => {
-  const { setUserData } = useContext(UserContext);
+  const { user, setUserData } = useContext(UserContext);
   let history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const responseGoogle = (response) => {
-    console.log(response);
+    setLoading(true);
 
     //https://zeereportingapi.azurewebsites.net
     //http://localhost:7071
@@ -34,35 +27,49 @@ const SignIn = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("DATA");
-        console.log(data);
         setUserData({
           authToken: data.token,
           name: response.profileObj.name,
           email: response.profileObj.email,
           imageUrl: response.profileObj.imageUrl,
         });
-        history.push("/dashboard/store-data/sales");
+        history.push("/dashboard/default");
       })
       .catch((error) => {
         console.log(error);
-        alert(
-          "Problem authentication.  Check console logs.  TODO: make this a toast"
+        showToast(
+          "error",
+          "Problem authenticating.  Is your email registered with ZeeReporting?"
         );
+        setLoading(false);
       });
   };
 
   return (
     <React.Fragment>
+      {loading ? (
+        <Overlay height="100vh" width="100vw">
+          <Spinner />
+        </Overlay>
+      ) : (
+        <div />
+      )}
+      <div className="text-center mt-4">
+        <Box className="align-middle text-primary" size={64} />{" "}
+        <span
+          className="align-middle"
+          style={{ marginLeft: "1rem", fontSize: "3rem" }}
+        >
+          Zee Reporting
+        </span>
+      </div>
       <div className="text-center mt-4">
         {/* <h2>Welcome back, Chris</h2> */}
         <p className="lead">Sign in to your account to continue</p>
       </div>
 
-      <Card>
-        <CardBody>
-          <div className="m-sm-4">
-            {/* <div className="text-center">
+      <div className="m-sm-4">
+        {/* <div className="text-center">
               <img
                 src={avatar}
                 alt="Chris Wood"
@@ -71,8 +78,8 @@ const SignIn = () => {
                 height="132"
               />
             </div> */}
-            <Form>
-              {/* <FormGroup>
+        <Form>
+          {/* <FormGroup>
                 <Label>Email</Label>
                 <Input
                   bsSize="lg"
@@ -93,7 +100,7 @@ const SignIn = () => {
                   <Link to="/auth/reset-password">Forgot password?</Link>
                 </small>
               </FormGroup> */}
-              {/* <div>
+          {/* <div>
                 <CustomInput
                   type="checkbox"
                   id="rememberMe"
@@ -101,15 +108,15 @@ const SignIn = () => {
                   defaultChecked
                 />
               </div> */}
-              <div className="text-center mt-3">
-                <GoogleLogin
-                  clientId="736706520895-rc52mtp1882sl8oss2o65oab8e5p7mr8.apps.googleusercontent.com"
-                  buttonText="Login"
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
-                  cookiePolicy={"single_host_origin"}
-                />
-                {/* <Button
+          <div className="text-center mt-3">
+            <GoogleLogin
+              clientId="736706520895-rc52mtp1882sl8oss2o65oab8e5p7mr8.apps.googleusercontent.com"
+              buttonText="Login"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+            {/* <Button
                 color="primary"
                 size="lg"
                 onClick={() =>
@@ -119,11 +126,9 @@ const SignIn = () => {
               >
                 Sign in
               </Button> */}
-              </div>
-            </Form>
           </div>
-        </CardBody>
-      </Card>
+        </Form>
+      </div>
     </React.Fragment>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { enableClassicTheme } from "../../redux/actions/themeActions";
+import { enableModernTheme } from "../../redux/actions/themeActions";
 
 import {
   Badge,
@@ -16,7 +16,7 @@ import {
   NavLink,
   Navbar,
   NavbarBrand,
-  Row
+  Row,
 } from "reactstrap";
 
 import {
@@ -26,7 +26,7 @@ import {
   DownloadCloud,
   Mail,
   Sliders,
-  Smartphone
+  Smartphone,
 } from "react-feather";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -778,7 +778,7 @@ const Footer = () => (
 class Landing extends React.Component {
   UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(enableClassicTheme());
+    dispatch(enableModernTheme());
   }
 
   render() {

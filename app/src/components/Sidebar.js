@@ -12,7 +12,9 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import routes from "../routes/index";
 import avatar from "../assets/img/avatars/avatar.jpg";
 
-const sidebarRoutes = routes.filter((r) => r.name !== "Auth");
+const sidebarRoutes = routes.filter(
+  (r) => !["Auth", "Dashboard"].includes(r.name)
+);
 
 const SidebarCategory = withRouter(
   ({

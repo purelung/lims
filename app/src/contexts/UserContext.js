@@ -1,10 +1,22 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 // This context provider is passed to any component requiring the context
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(undefined);
+  const useStateWithLocalStorage = (localStorageKey) => {
+    const [value, setValue] = useState(
+      JSON.parse(localStorage.getItem(localStorageKey) || "{}")
+    );
+
+    React.useEffect(() => {
+      localStorage.setItem(localStorageKey, JSON.stringify(value || {}));
+    }, [value]);
+
+    return [value, setValue];
+  };
+
+  const [user, setUser] = useStateWithLocalStorage("userAuthData");
 
   const setUserData = (userData) => {
     setUser({ ...user, ...userData });
@@ -15,6 +27,7 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         setUserData,
+        setUser,
       }}
     >
       {children}

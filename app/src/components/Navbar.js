@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { connect } from "react-redux";
 import { toggleSidebar } from "../redux/actions/sidebarActions";
+import { useHistory } from "react-router-dom";
 
 import {
   Row,
@@ -136,11 +137,12 @@ const NavbarDropdownItem = ({ icon, title, description, time, spacing }) => (
 );
 
 const NavbarComponent = ({ dispatch }) => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  let history = useHistory();
 
   return (
     <Navbar color="white" light expand>
-      <span
+      {/* <span
         className="sidebar-toggle d-flex mr-2"
         onClick={() => {
           dispatch(toggleSidebar());
@@ -156,7 +158,7 @@ const NavbarComponent = ({ dispatch }) => {
           aria-label="Search"
           className="form-control-no-border mr-sm-2"
         />
-      </Form>
+      </Form> */}
 
       <Collapse navbar>
         <Nav className="ml-auto" navbar>
@@ -292,7 +294,14 @@ const NavbarComponent = ({ dispatch }) => {
               <DropdownItem divider />
               <DropdownItem>Settings & Privacy</DropdownItem>
               <DropdownItem>Help</DropdownItem> */}
-              <DropdownItem>Sign out</DropdownItem>
+              <DropdownItem
+                onClick={() => {
+                  setUser({});
+                  history.push("/auth/sign-in");
+                }}
+              >
+                Sign out
+              </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>

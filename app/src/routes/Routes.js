@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +10,7 @@ import {
   dashboard as dashboardRoutes,
   page as pageRoutes,
 } from "./index";
+import { UserContext } from "../contexts/UserContext";
 
 import DashboardLayout from "../layouts/Dashboard";
 import LandingLayout from "../layouts/Landing";
@@ -35,7 +36,6 @@ const childRoutes = (Layout, routes) =>
         />
       ))
     ) : (
-      // Route item without children
       <Route
         key={index}
         path={path}
@@ -49,26 +49,36 @@ const childRoutes = (Layout, routes) =>
     )
   );
 
-const Routes = () => (
-  <Router>
-    <ScrollToTop>
-      <Switch>
-        <Route exact path="/">
-          <Redirect to="/auth/sign-in" />
-        </Route>
-        {/* {childRoutes(LandingLayout, landingRoutes)} */}
-        {childRoutes(DashboardLayout, dashboardRoutes)}
-        {childRoutes(AuthLayout, pageRoutes)}
-        <Route
-          render={() => (
-            <AuthLayout>
-              <Page404 />
-            </AuthLayout>
-          )}
-        />
-      </Switch>
-    </ScrollToTop>
-  </Router>
-);
+const Routes = () => {
+  const { user } = useContext(UserContext);
+  const authenticated = user.authToken !== undefined;
+  const redirectPath = authenticated ? "/dashboard/default" : "/auth/sign-in";
+
+  return (
+    <Router>
+      <ScrollToTop>
+        <Switch>
+          <Route exact path="/">
+            <Redirect to={redirectPath} />
+          </Route>
+
+          {/* {childRoutes(LandingLayout, landingRoutes)} */}
+
+          {childRoutes(DashboardLayout, authenticated ? dashboardRoutes : [])}
+
+          {childRoutes(AuthLayout, pageRoutes)}
+
+          <Route
+            render={() => (
+              <AuthLayout>
+                <Page404 />
+              </AuthLayout>
+            )}
+          />
+        </Switch>
+      </ScrollToTop>
+    </Router>
+  );
+};
 
 export default Routes;
