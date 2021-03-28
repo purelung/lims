@@ -11,13 +11,13 @@ import {
   FormGroup,
   Input,
   Label,
-  Row
+  Row,
 } from "reactstrap";
 
 const options = [
   { value: "chocolate", label: "Chocolate" },
   { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" }
+  { value: "vanilla", label: "Vanilla" },
 ];
 
 class ReactSelect extends React.Component {
@@ -110,7 +110,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Date</Label>
             <InputMask mask="99/99/9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "DD/MM/YYYY"</span>
           </FormGroup>
@@ -118,7 +118,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Hour</Label>
             <InputMask mask="99:99:9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "HH:MM:SS"</span>
           </FormGroup>
@@ -126,7 +126,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Date & Hour</Label>
             <InputMask mask="99/99/9999 99:99:99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "DD/MM/YYYY HH:MM:SS"</span>
           </FormGroup>
@@ -134,7 +134,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>ZIP Code</Label>
             <InputMask mask="99999-999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "DD/MM/YYYY HH:MM:SS"</span>
           </FormGroup>
@@ -142,7 +142,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>ZIP Code</Label>
             <InputMask mask="9-99-99-99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "x-xx-xx-xx"</span>
           </FormGroup>
@@ -150,7 +150,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Money</Label>
             <InputMask mask="999.999.999.999.999,99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "Your money"</span>
           </FormGroup>
@@ -158,7 +158,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Money 2</Label>
             <InputMask mask="9.999,99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "x.xxx,xx"</span>
           </FormGroup>
@@ -167,7 +167,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Telephone</Label>
             <InputMask mask="9999-9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "xxxx-xxxx"</span>
           </FormGroup>
@@ -175,7 +175,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>Telephone with Code Area</Label>
             <InputMask mask="(99) 9999-9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "(xx) xxxx-xxxx"</span>
           </FormGroup>
@@ -183,7 +183,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>US Telephone</Label>
             <InputMask mask="(999) 999-9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "(xxx) xxx-xxxx"</span>
           </FormGroup>
@@ -191,7 +191,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>São Paulo Celphones</Label>
             <InputMask mask="(99) 99999-9999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "(xx) xxxxx-xxxx"</span>
           </FormGroup>
@@ -199,7 +199,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>CPF</Label>
             <InputMask mask="999.999.999-99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "xxx.xxx.xxxx-xx"</span>
           </FormGroup>
@@ -207,7 +207,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>CNPJ</Label>
             <InputMask mask="99.999.999/9999-99">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "xx.xxx.xxx/xxxx-xx"</span>
           </FormGroup>
@@ -215,7 +215,7 @@ const InputMasks = () => (
           <FormGroup>
             <Label>IP Address</Label>
             <InputMask mask="999.999.999.999">
-              {inputProps => <Input {...inputProps} type="text" />}
+              {(inputProps) => <Input {...inputProps} type="text" />}
             </InputMask>
             <span className="text-muted">e.g "xxx.xxx.xxx.xxx"</span>
           </FormGroup>

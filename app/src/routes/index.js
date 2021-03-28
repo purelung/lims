@@ -108,6 +108,10 @@ const Calendar = async(() => import("../pages/calendar/Calendar"));
 const VectorMaps = async(() => import("../pages/maps/VectorMaps"));
 const GoogleMaps = async(() => import("../pages/maps/GoogleMaps"));
 
+// Store Admin
+const Users = async(() => import("../pages/store-admin/users"));
+const AddUser = async(() => import("../pages/store-admin/add-user"));
+
 // Routes
 const landingRoutes = {
   path: "/",
@@ -491,11 +495,11 @@ const chartRoutes = {
   // badgeColor: "primary",
   // badgeText: "New",
   children: [
-    {
-      path: "/dashboard/reports/sales",
-      name: "Sales",
-      component: PaginationTables,
-    },
+    // {
+    //   path: "/dashboard/reports/sales",
+    //   name: "Sales",
+    //   component: PaginationTables,
+    // },
     {
       path: "/dashboard/reports/earnings",
       name: "Earnings",
@@ -558,6 +562,24 @@ const privateRoutes = {
   ],
 };
 
+const storeAdminRoutes = {
+  path: "/dashboard/store-admin",
+  name: "Store Admin",
+  icon: UsersIcon,
+  children: [
+    {
+      path: "/dashboard/store-admin/users",
+      name: "Manage Users",
+      component: Users,
+    },
+    {
+      path: "/dashboard/store-admin/add-user",
+      name: "Add User",
+      component: AddUser,
+    },
+  ],
+};
+
 // Dashboard specific routes
 export const dashboard = [
   dashboardRoutes,
@@ -575,6 +597,7 @@ export const dashboard = [
   mapRoutes,
   calendarRoutes,
   privateRoutes,
+  storeAdminRoutes,
 ];
 
 // Landing specific routes
@@ -600,4 +623,5 @@ export default [
   // notificationsRoutes,
   // mapRoutes,
   // calendarRoutes,
+  storeAdminRoutes,
 ];

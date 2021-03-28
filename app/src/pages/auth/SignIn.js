@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Box } from "react-feather";
-import { Button, Form } from "reactstrap";
+import { Form } from "reactstrap";
 import { GoogleLogin } from "react-google-login";
 import { UserContext } from "../../contexts/UserContext";
 import { Overlay, Spinner, showToast } from "../../components";
-import { shot } from "react-redux-toastr";
-import avatar from "../../assets/img/avatars/avatar.jpg";
+import { apiBaseUrl } from "../../constants";
 
 const SignIn = () => {
   const { user, setUserData } = useContext(UserContext);
@@ -16,9 +15,7 @@ const SignIn = () => {
   const responseGoogle = (response) => {
     setLoading(true);
 
-    //https://zeereportingapi.azurewebsites.net
-    //http://localhost:7071
-    fetch("https://zeereportingapi.azurewebsites.net/api/auth", {
+    fetch(apiBaseUrl() + "/api/auth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,6 +29,7 @@ const SignIn = () => {
           name: response.profileObj.name,
           email: response.profileObj.email,
           imageUrl: response.profileObj.imageUrl,
+          franchiseId: data.franchiseId,
         });
         history.push("/dashboard/default");
       })

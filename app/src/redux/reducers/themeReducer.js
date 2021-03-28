@@ -31,7 +31,7 @@ const themes = {
 };
 
 const initialState = {
-  currentTheme: themes.moden,
+  currentTheme: themes.modern,
   themes: themes,
 };
 

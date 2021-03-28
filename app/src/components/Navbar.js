@@ -142,7 +142,7 @@ const NavbarComponent = ({ dispatch }) => {
 
   return (
     <Navbar color="white" light expand>
-      {/* <span
+      <span
         className="sidebar-toggle d-flex mr-2"
         onClick={() => {
           dispatch(toggleSidebar());
@@ -151,7 +151,7 @@ const NavbarComponent = ({ dispatch }) => {
         <i className="hamburger align-self-center" />
       </span>
 
-      <Form inline>
+      {/* <Form inline>
         <Input
           type="text"
           placeholder="Search projects..."
