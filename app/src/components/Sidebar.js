@@ -156,15 +156,17 @@ class Sidebar extends React.Component {
                         isOpen={this.state[index]}
                         onClick={() => this.toggle(index)}
                       >
-                        {category.children.map((route, index) => (
-                          <SidebarItem
-                            key={index}
-                            name={route.name}
-                            to={route.path}
-                            badgeColor={route.badgeColor}
-                            badgeText={route.badgeText}
-                          />
-                        ))}
+                        {category.children
+                          .filter((c) => c.name !== "Edit User")
+                          .map((route, index) => (
+                            <SidebarItem
+                              key={index}
+                              name={route.name}
+                              to={route.path}
+                              badgeColor={route.badgeColor}
+                              badgeText={route.badgeText}
+                            />
+                          ))}
                       </SidebarCategory>
                     ) : (
                       <SidebarItem

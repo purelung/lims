@@ -577,6 +577,11 @@ const storeAdminRoutes = {
       name: "Add User",
       component: AddUser,
     },
+    {
+      path: "/dashboard/store-admin/edit-user",
+      name: "Edit User",
+      component: AddUser,
+    },
   ],
 };
 

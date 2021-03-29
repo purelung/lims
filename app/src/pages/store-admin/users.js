@@ -4,13 +4,24 @@ import { Overlay, Spinner, showToast } from "../../components";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { apiBaseUrl } from "../../constants";
-import { UserPlus } from "react-feather";
+import { UserPlus, Edit2, Trash } from "react-feather";
 import styled from "styled-components";
 import { UserContext } from "../../contexts/UserContext";
 import { useHistory } from "react-router-dom";
+import { roles } from "../../constants";
 
 const StyledCardHeader = styled(CardHeader)`
   display: flex;
+`;
+
+const StyledEdit = styled(Edit2)`
+  :hover {
+    color: #9d7bd8;
+  }
+
+  :active {
+    color: #20c997;
+  }
 `;
 
 const StyledUserPlus = styled(UserPlus)`
@@ -36,7 +47,7 @@ const Table = () => {
   let history = useHistory();
 
   const fetchUsers = () => {
-    fetch(apiBaseUrl() + "/api/users", {
+    fetch(apiBaseUrl() + "/api/users?franchiseId=" + user.franchiseId, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +56,12 @@ const Table = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setUsers(data);
+        setUsers(
+          data.map((u) => ({
+            ...u,
+            role: roles.find((r) => u.userRoleId === r.value).label,
+          }))
+        );
       })
       .catch((error) => {
         showToast("error", "Unable to retrieve users.  Check console logs");
@@ -82,6 +98,27 @@ const Table = () => {
       dataField: "role",
       text: "Role",
       sort: true,
+    },
+    {
+      dataField: "",
+      text: "Actions",
+      align: "right",
+      headerAlign: "right",
+      formatter: (cell, row, rowIndex, formateExtraData) => {
+        return (
+          <div>
+            <StyledEdit
+              className="align-middle mr-1"
+              size={18}
+              onClick={() =>
+                history.push(
+                  "/dashboard/store-admin/edit-user?userId=" + row.id
+                )
+              }
+            />
+          </div>
+        );
+      },
     },
   ];
 

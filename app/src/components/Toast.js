@@ -28,5 +28,5 @@ export const showToast = (type, message) => {
       ? toastr.error
       : toastr.success;
 
-  toastrInstance("Error signing in", message, options);
+  toastrInstance("Error", message, options);
 };
