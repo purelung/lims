@@ -5,11 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import {
-  landing as landingRoutes,
-  dashboard as dashboardRoutes,
-  page as pageRoutes,
-} from "./index";
+import { dashboard as dashboardRoutes, auth as authRoutes } from "./index";
 import { UserContext } from "../contexts/UserContext";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -66,7 +62,7 @@ const Routes = () => {
 
           {childRoutes(DashboardLayout, authenticated ? dashboardRoutes : [])}
 
-          {childRoutes(AuthLayout, pageRoutes)}
+          {childRoutes(AuthLayout, authRoutes)}
 
           <Route
             render={() => (

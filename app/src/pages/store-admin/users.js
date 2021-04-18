@@ -44,9 +44,11 @@ const StyledUserPlus = styled(UserPlus)`
 const Table = () => {
   const { user } = useContext(UserContext);
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   let history = useHistory();
 
   const fetchUsers = () => {
+    setLoading(true);
     fetch(apiBaseUrl() + "/api/users?franchiseId=" + user.franchiseId, {
       method: "GET",
       headers: {
@@ -66,7 +68,8 @@ const Table = () => {
       .catch((error) => {
         showToast("error", "Unable to retrieve users.  Check console logs");
         console.log(error);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -124,6 +127,13 @@ const Table = () => {
 
   return (
     <Card>
+      {loading ? (
+        <Overlay height="100vh" width="100vw">
+          <Spinner />
+        </Overlay>
+      ) : (
+        <div />
+      )}
       <StyledCardHeader>
         <CardTitle tag="h5">Manage franchise users</CardTitle>
         <StyledUserPlus

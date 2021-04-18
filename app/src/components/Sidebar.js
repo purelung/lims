@@ -9,12 +9,10 @@ import { Box } from "react-feather";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
-import routes from "../routes/index";
+import { dashboard } from "../routes/index";
 import avatar from "../assets/img/avatars/avatar.jpg";
 
-const sidebarRoutes = routes.filter(
-  (r) => !["Auth", "Dashboard"].includes(r.name)
-);
+const sidebarRoutes = dashboard.filter((r) => !["Dashboard"].includes(r.name));
 
 const SidebarCategory = withRouter(
   ({
