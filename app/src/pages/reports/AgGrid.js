@@ -10,10 +10,21 @@ ModuleRegistry.registerModules(AllModules);
 const AgGrid = ({ rows, rowGroup = "" }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+  const columnNames = rows.length === 0 ? [] : Object.keys(rows[0]);
+
+  const autoSizeAll = (columnApi, skipHeader) => {
+    var allColumnIds = [];
+    columnApi.getAllColumns().forEach(function (column) {
+      allColumnIds.push(column.colId);
+    });
+    columnApi.autoSizeColumns(allColumnIds, skipHeader);
+    console.log(allColumnIds);
+  };
 
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
+    autoSizeAll(params.columnApi, false);
   };
 
   const onBtnExport = () => {
@@ -94,26 +105,29 @@ const AgGrid = ({ rows, rowGroup = "" }) => {
         return text;
     }
   };
+  const autoGroupColumnDef = { headerName: "Salon" };
 
   return (
-    <div className="ag-theme-alpine" style={{ height: 800, width: 1200 }}>
-      <AgGridReact
-        onGridReady={onGridReady}
-        rowData={rows}
-        autoSize={true}
-        pagination={true}
-        suppressCsvExport={false}
-        autoGroupColumnDef={{ minWidth: 200 }}
-        enableRangeSelection={true}
-        animateRows={true}
-        enableCharts={true}
-      >
-        {rows.length === 0 ? (
-          <AgGridColumn field="id"></AgGridColumn>
-        ) : (
-          Object.keys(rows[0]).map((k) => (
+    <div className="ag-theme-alpine" style={{ height: 800, width: 1100 }}>
+      {columnNames.length === 0 ? (
+        <div />
+      ) : (
+        <AgGridReact
+          onGridReady={onGridReady}
+          rowData={rows}
+          autoSize={true}
+          pagination={true}
+          suppressCsvExport={false}
+          autoGroupColumnDef={{ minWidth: 200 }}
+          enableRangeSelection={true}
+          animateRows={true}
+          enableCharts={true}
+          autoGroupColumnDef={autoGroupColumnDef}
+        >
+          {columnNames.map((k) => (
             <AgGridColumn
               rowGroup={k === rowGroup}
+              hide={k === rowGroup}
               filter={"agSetColumnFilter"}
               key={k}
               field={k}
@@ -121,9 +135,9 @@ const AgGrid = ({ rows, rowGroup = "" }) => {
               autoSize={true}
               sortable={true}
             ></AgGridColumn>
-          ))
-        )}
-      </AgGridReact>
+          ))}
+        </AgGridReact>
+      )}
     </div>
   );
 };
