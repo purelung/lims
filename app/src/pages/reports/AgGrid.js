@@ -7,7 +7,7 @@ import { ModuleRegistry, AllModules } from "@ag-grid-enterprise/all-modules";
 
 ModuleRegistry.registerModules(AllModules);
 
-const AgGrid = ({ rows, rowGroup = false }) => {
+const AgGrid = ({ rows, rowGroup = "" }) => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
 
@@ -113,7 +113,7 @@ const AgGrid = ({ rows, rowGroup = false }) => {
         ) : (
           Object.keys(rows[0]).map((k) => (
             <AgGridColumn
-              rowGroup={k === "salonId" && rowGroup}
+              rowGroup={k === rowGroup}
               filter={"agSetColumnFilter"}
               key={k}
               field={k}

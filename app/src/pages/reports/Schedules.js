@@ -48,7 +48,7 @@ const Schedules = () => {
 
       <Row>
         <Col lg="6">
-          <AgGrid rows={schedules} rowGroup={true} />
+          <AgGrid rows={schedules} rowGroup={"Salon#"} />
         </Col>
       </Row>
     </Container>
