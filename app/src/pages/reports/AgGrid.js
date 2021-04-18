@@ -114,10 +114,12 @@ const AgGrid = ({ rows, rowGroup = false }) => {
           Object.keys(rows[0]).map((k) => (
             <AgGridColumn
               rowGroup={k === "salonId" && rowGroup}
+              filter={"agSetColumnFilter"}
               key={k}
               field={k}
               resizable={true}
               autoSize={true}
+              sortable={true}
             ></AgGridColumn>
           ))
         )}
