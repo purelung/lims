@@ -50,7 +50,6 @@ const AgGrid = ({ title, rows, rowGroup = "" }) => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
-
     autoSizeAll(params.columnApi, false);
     params.api.sizeColumnsToFit();
   };
@@ -63,6 +62,7 @@ const AgGrid = ({ title, rows, rowGroup = "" }) => {
       return null;
     }
   };
+  const autoGroupColumnDef = { headerName: "Salon" };
 
   return (
     <div>
