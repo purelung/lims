@@ -22,6 +22,10 @@ const Rankings = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        // var newData = data.map((d) => ({
+        //   ...d,
+        //   Customer_SparkLine: "7,8,6,10,13",
+        // }));
         setRankings(data);
       })
       .catch((error) => {
@@ -44,13 +48,7 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <h1 className="h3 mb-3">Rankings</h1>
-
-      <Row>
-        <Col lg="6">
-          <AgGrid rows={rankings} />
-        </Col>
-      </Row>
+      <AgGrid title={"Rankings"} rows={rankings} />
     </Container>
   );
 };

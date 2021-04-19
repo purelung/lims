@@ -59,10 +59,12 @@ const Table = () => {
       .then((response) => response.json())
       .then((data) => {
         setUsers(
-          data.map((u) => ({
-            ...u,
-            role: roles.find((r) => u.userRoleId === r.value).label,
-          }))
+          data
+            .filter((u) => u.userRoleId > 1)
+            .map((u) => ({
+              ...u,
+              role: roles.find((r) => u.userRoleId === r.value).label,
+            }))
         );
       })
       .catch((error) => {
