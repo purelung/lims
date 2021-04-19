@@ -28,5 +28,6 @@ export const showToast = (type, message) => {
       ? toastr.error
       : toastr.success;
 
-  toastrInstance("Error", message, options);
+  const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+  toastrInstance(capitalizedType, message, options);
 };

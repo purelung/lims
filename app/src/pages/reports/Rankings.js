@@ -48,13 +48,7 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <h1 className="h3 mb-3">Rankings</h1>
-
-      <Row>
-        <Col lg="6">
-          <AgGrid rows={rankings} />
-        </Col>
-      </Row>
+      <AgGrid title={"Rankings"} rows={rankings} />
     </Container>
   );
 };
