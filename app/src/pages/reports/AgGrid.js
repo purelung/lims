@@ -62,7 +62,6 @@ const AgGrid = ({ title, rows, rowGroup = "" }) => {
       return null;
     }
   };
-  const autoGroupColumnDef = { headerName: "Salon" };
 
   return (
     <div>
