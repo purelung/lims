@@ -4,6 +4,7 @@ import "ag-grid-enterprise";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { ModuleRegistry, AllModules } from "@ag-grid-enterprise/all-modules";
+import sparklineRenderer from "./sparklineRenderer.jsx";
 
 ModuleRegistry.registerModules(AllModules);
 
@@ -106,6 +107,13 @@ const AgGrid = ({ rows, rowGroup = "" }) => {
     }
   };
   const autoGroupColumnDef = { headerName: "Salon" };
+  const getCellRenderer = (columnName) => {
+    if (columnName.indexOf("_Spark") > -1) {
+      return "sparklineRenderer";
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div className="ag-theme-alpine" style={{ height: 800, width: 1100 }}>
@@ -123,19 +131,40 @@ const AgGrid = ({ rows, rowGroup = "" }) => {
           animateRows={true}
           enableCharts={true}
           autoGroupColumnDef={autoGroupColumnDef}
+          frameworkComponents={{
+            sparklineRenderer: sparklineRenderer,
+          }}
         >
-          {columnNames.map((k) => (
-            <AgGridColumn
-              rowGroup={k === rowGroup}
-              hide={k === rowGroup}
-              filter={"agSetColumnFilter"}
-              key={k}
-              field={k}
-              resizable={true}
-              autoSize={true}
-              sortable={true}
-            ></AgGridColumn>
-          ))}
+          {columnNames
+            .filter((k) => k.indexOf("_Spark") === -1)
+            .map((k) => (
+              <AgGridColumn
+                rowGroup={k === rowGroup}
+                hide={k === rowGroup}
+                filter={"agSetColumnFilter"}
+                key={k}
+                field={k}
+                resizable={true}
+                autoSize={true}
+                sortable={true}
+                cellRenderer={getCellRenderer(k)}
+              ></AgGridColumn>
+            ))}
+          {columnNames
+            .filter((k) => k.indexOf("_Spark") > -1)
+            .map((k) => (
+              <AgGridColumn
+                rowGroup={k === rowGroup}
+                hide={k === rowGroup}
+                filter={"agSetColumnFilter"}
+                key={k}
+                field={k}
+                resizable={true}
+                autoSize={true}
+                sortable={true}
+                cellRenderer="sparklineRenderer"
+              ></AgGridColumn>
+            ))}
         </AgGridReact>
       )}
     </div>

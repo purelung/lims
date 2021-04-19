@@ -22,6 +22,10 @@ const Rankings = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        // var newData = data.map((d) => ({
+        //   ...d,
+        //   Customer_SparkLine: "7,8,6,10,13",
+        // }));
         setRankings(data);
       })
       .catch((error) => {
