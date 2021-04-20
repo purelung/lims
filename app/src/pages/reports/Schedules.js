@@ -45,7 +45,7 @@ const Schedules = () => {
         <div />
       )}
 
-      <AgGrid title={"Schedules"} rows={schedules} rowGroup={"Salon#"} />
+      <AgGrid title={"Schedules"} rows={schedules} />
     </Container>
   );
 };
