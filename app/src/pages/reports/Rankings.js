@@ -48,7 +48,7 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <PrimeDataTable title={"Rankings"} rows={rankings} rowGroup="Salon#" />
+      <PrimeDataTable title={"Rankings"} rows={rankings} />
     </Container>
   );
 };
