@@ -4,7 +4,7 @@ import { apiBaseUrl } from "../../constants";
 import { UserContext } from "../../contexts/UserContext";
 
 import { Col, Container, Row } from "reactstrap";
-import AgGrid from "./AgGrid";
+import PrimeDataTable from "./PrimeDataTable";
 
 const Schedules = () => {
   const [schedules, setSchedules] = useState([]);
@@ -44,8 +44,7 @@ const Schedules = () => {
       ) : (
         <div />
       )}
-
-      <AgGrid title={"Schedules"} rows={schedules} />
+      <PrimeDataTable title={"Schedules"} rows={schedules} rowGroup="Salon#" />
     </Container>
   );
 };

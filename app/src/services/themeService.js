@@ -5,7 +5,7 @@ export function toggleTheme(name) {
 
 function detachStylesheets() {
   Array.from(document.querySelectorAll('link[rel="stylesheet"]')).forEach(
-    style => {
+    (style) => {
       style.parentNode.removeChild(style);
     }
   );

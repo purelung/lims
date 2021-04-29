@@ -4,7 +4,7 @@ import { apiBaseUrl } from "../../constants";
 import { UserContext } from "../../contexts/UserContext";
 
 import { Col, Container, Row } from "reactstrap";
-import AgGrid from "./AgGrid";
+import PrimeDataTable from "./PrimeDataTable";
 
 const Rankings = () => {
   const [rankings, setRankings] = useState([]);
@@ -22,10 +22,6 @@ const Rankings = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // var newData = data.map((d) => ({
-        //   ...d,
-        //   Customer_SparkLine: "7,8,6,10,13",
-        // }));
         setRankings(data);
       })
       .catch((error) => {
@@ -48,7 +44,7 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <AgGrid title={"Rankings"} rows={rankings} />
+      <PrimeDataTable title={"Rankings"} rows={rankings} />
     </Container>
   );
 };
