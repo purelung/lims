@@ -4,7 +4,7 @@ import { apiBaseUrl } from "../../constants";
 import { UserContext } from "../../contexts/UserContext";
 
 import { Col, Container, Row } from "reactstrap";
-import AgGrid from "./AgGrid";
+import PrimeDataTable from "./PrimeDataTable";
 
 const Rankings = () => {
   const [rankings, setRankings] = useState([]);
@@ -48,7 +48,7 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <AgGrid title={"Rankings"} rows={rankings} />
+      <PrimeDataTable title={"Rankings"} rows={rankings} />
     </Container>
   );
 };
