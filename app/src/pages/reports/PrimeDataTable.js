@@ -80,7 +80,7 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
   const sparkTemplate = (rowData, columnName) => {
     return (
       <Sparklines data={rowData[columnName].split(",")}>
-        <SparklinesBars color="blue" />
+        <SparklinesLine color="blue" />
       </Sparklines>
     );
   };
