@@ -7,7 +7,7 @@ export default (props) => {
 
   return (
     <span>
-      <Sparklines data={cellValue.split(",")}><SparklinesLine color="blue" /></Sparklines>
+      <Sparklines data={cellValue.split(",")}><SparklinesBar color="blue" /></Sparklines>
     </span>
   );
 };
