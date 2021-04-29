@@ -219,7 +219,7 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
             rows={10}
-            rowsPerPageOptions={[10, 20, 50, 100]}
+            rowsPerPageOptions={[10, 20, 50]}
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
           >
