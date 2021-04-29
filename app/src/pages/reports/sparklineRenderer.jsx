@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparklines, SparklinesLine } from "react-sparklines";
+import { Sparklines, SparklinesBar } from "react-sparklines";
 
 export default (props) => {
   const cellValue = props.valueFormatted ? props.valueFormatted : props.value;
@@ -7,7 +7,7 @@ export default (props) => {
 
   return (
     <span>
-      <Sparklines data={cellValue.split(",")}><SparklinesBar color="blue" /></Sparklines>
+      <Sparklines data={cellValue.split(",")}><SparklinesLine color="blue" /></Sparklines>
     </span>
   );
 };
