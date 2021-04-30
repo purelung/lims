@@ -6,14 +6,14 @@ import { UserContext } from "../../contexts/UserContext";
 import { Col, Container, Row } from "reactstrap";
 import PrimeDataTable from "./PrimeDataTable";
 
-const Rankings = () => {
+const SalonRankings = () => {
   const [rankings, setRankings] = useState([]);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
   const fetchRankings = () => {
     setLoading(true);
-    fetch(apiBaseUrl() + "/api/rankings", {
+    fetch(apiBaseUrl() + "/api/salon-rankings", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -22,10 +22,6 @@ const Rankings = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        // var newData = data.map((d) => ({
-        //   ...d,
-        //   Customer_SparkLine: "7,8,6,10,13",
-        // }));
         setRankings(data);
       })
       .catch((error) => {
@@ -48,9 +44,9 @@ const Rankings = () => {
       ) : (
         <div />
       )}
-      <PrimeDataTable title={"Rankings"} rows={rankings} />
+      <PrimeDataTable title={"Salon Rankings"} rows={rankings} />
     </Container>
   );
 };
 
-export default Rankings;
+export default SalonRankings;
