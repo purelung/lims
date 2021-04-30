@@ -17,7 +17,10 @@ import Page500 from "../pages/auth/Page500";
 const Default = async(() => import("../pages/dashboards/Default"));
 
 // Reports
-const Rankings = async(() => import("../pages/reports/Rankings"));
+const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
+const EmployeeRankings = async(() =>
+  import("../pages/reports/EmployeeRankings")
+);
 const Schedules = async(() => import("../pages/reports/Schedules"));
 
 // Store Admin
@@ -83,9 +86,14 @@ const reportRoutes = {
 
   children: [
     {
-      path: "/dashboard/reports/rankings",
-      name: "Rankings",
-      component: Rankings,
+      path: "/dashboard/reports/salon-rankings",
+      name: "Salon Rankings",
+      component: SalonRankings,
+    },
+    {
+      path: "/dashboard/reports/employee-rankings",
+      name: "Employee Rankings",
+      component: EmployeeRankings,
     },
     {
       path: "/dashboard/reports/schedules",
