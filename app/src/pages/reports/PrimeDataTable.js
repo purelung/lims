@@ -204,11 +204,12 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
         <Card title={title}>
           <DataTable
             header={header}
+            className="p-datatable-sm"
             style={{
               width: "100%",
             }}
             scrollable
-            resizableColumns
+            resizableColumns="true"
             columnResizeMode="expand"
             value={rows}
             sortMode="single"

@@ -15,6 +15,7 @@ import Page500 from "../pages/auth/Page500";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
+const SalonVisit = async(() => import("../pages/dashboards/Default/SalonVisit"));
 
 // Reports
 const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
@@ -38,8 +39,13 @@ const dashboardRoutes = {
   children: [
     {
       path: "/dashboard/default",
-      name: "Default",
+      name: "Home",
       component: Default,
+    },
+    {
+      path: "/dashboard/salon-visit",
+      name: "Salon Visit",
+      component: SalonVisit,
     },
   ],
 };
@@ -80,23 +86,23 @@ const authRoutes = {
 };
 
 const reportRoutes = {
-  path: "/dashboard/reports",
+  path: "/reports",
   name: "Reports",
   icon: PieChartIcon,
 
   children: [
     {
-      path: "/dashboard/reports/salon-rankings",
+      path: "/reports/salon-rankings",
       name: "Salon Rankings",
       component: SalonRankings,
     },
     {
-      path: "/dashboard/reports/employee-rankings",
+      path: "/reports/employee-rankings",
       name: "Employee Rankings",
       component: EmployeeRankings,
     },
     {
-      path: "/dashboard/reports/schedules",
+      path: "/reports/schedules",
       name: "Schedules",
       component: Schedules,
     },
@@ -104,22 +110,22 @@ const reportRoutes = {
 };
 
 const storeAdminRoutes = {
-  path: "/dashboard/store-admin",
+  path: "/store-admin",
   name: "Store Admin",
   icon: UsersIcon,
   children: [
     {
-      path: "/dashboard/store-admin/users",
+      path: "/store-admin/users",
       name: "Manage Users",
       component: Users,
     },
     {
-      path: "/dashboard/store-admin/add-user",
+      path: "/store-admin/add-user",
       name: "Add User",
       component: AddUser,
     },
     {
-      path: "/dashboard/store-admin/edit-user",
+      path: "/store-admin/edit-user",
       name: "Edit User",
       component: AddUser,
     },

@@ -3,7 +3,6 @@ import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { enableModernTheme } from "../../../redux/actions/themeActions";
 
-import Appointments from "./Appointments";
 import BarChart from "./BarChart";
 import Calendar from "./Calendar";
 import Feed from "./Feed";
@@ -30,18 +29,7 @@ class Default extends React.Component {
             <LineChart />
           </Col>
           <Col lg="4" className="d-flex">
-            <Feed />
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="6" xl="4" className="d-flex">
-            <Calendar />
-          </Col>
-          <Col lg="6" xl="4" className="d-flex">
-            <PieChart />
-          </Col>
-          <Col lg="6" xl="4" className="d-flex">
-            <Appointments />
+          <BarChart />
           </Col>
         </Row>
         <Row>
