@@ -16,7 +16,7 @@ const Header = () => {
   return (
     <Row className="mb-2 mb-xl-4">
       <Col xs="auto" className="d-none d-sm-block">
-        <h3>Welcome back, Chris!</h3>
+        <h3>Welcome back, Temujin User!</h3>
       </Col>
 
       <Col xs="auto" className="ml-auto text-right mt-n1">

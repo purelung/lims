@@ -259,6 +259,7 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
 
 export default PrimeDataTable;
 
+
 const StyledContainer = styled.div`
   .p-column-filter {
     width: 100%;
