@@ -14,16 +14,13 @@ import Statistics from "./Statistics";
 import { render } from "react-dom";
 
 class SalonVisit extends React.Component {
-  UNSAFE_componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(enableModernTheme());
-  }
+ 
 
   render() {
     return (
       <Container fluid className="p-0">
-        <Header />
-        <Statistics />
+    
+    <h1 className="h3 mb-3">Salon Dashboard</h1>
         
         <Row>
           <Col lg="6" xl="8" className="d-flex">

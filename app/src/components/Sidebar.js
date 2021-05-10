@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { connect } from "react-redux";
 import { NavLink, withRouter } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 
 import { Badge, Collapse } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -12,7 +13,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import { dashboard } from "../routes/index";
 import avatar from "../assets/img/avatars/avatar.jpg";
 
-const sidebarRoutes = dashboard.filter((r) => !["Dashboard"].includes(r.name));
+let sidebarRoutes = dashboard.map(sidebarCat => {return { ...sidebarCat, children: sidebarCat.children.filter(c => !c.hidden) }})
 
 const SidebarCategory = withRouter(
   ({
@@ -81,7 +82,15 @@ const SidebarItem = withRouter(
   }
 );
 
-class Sidebar extends React.Component {
+const Sidebar = ({ location, sidebar, layout }) => {     
+  const { user, setUserData } = useContext(UserContext);
+
+  return <SidebarClass location = {location} user = {user} sidebar = {sidebar} layout = {layout}> 
+    
+  </SidebarClass>
+}
+
+class SidebarClass extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -119,7 +128,9 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const { sidebar, layout } = this.props;
+
+    const { sidebar, layout, user } = this.props;
+    sidebarRoutes = sidebarRoutes.filter(route => !(route.path.includes('store-admin') && user.userRoleId > 3))
 
     return (
       <nav

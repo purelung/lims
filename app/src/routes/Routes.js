@@ -60,7 +60,7 @@ const Routes = () => {
 
           {/* {childRoutes(LandingLayout, landingRoutes)} */}
 
-          {childRoutes(DashboardLayout, authenticated ? dashboardRoutes : [])}
+          {childRoutes(DashboardLayout, authenticated ? dashboardRoutes.filter(route => !(route.path.includes('store-admin') && user.userRoleId > 3)) : [])}
 
           {childRoutes(AuthLayout, authRoutes)}
 

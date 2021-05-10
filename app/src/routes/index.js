@@ -13,6 +13,7 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import Page404 from "../pages/auth/Page404";
 import Page500 from "../pages/auth/Page500";
 
+
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
 const SalonVisit = async(() => import("../pages/dashboards/Default/SalonVisit"));
@@ -40,8 +41,10 @@ const dashboardRoutes = {
     {
       path: "/dashboard/default",
       name: "Home",
+      hidden: true,
       component: Default,
     },
+  
     {
       path: "/dashboard/salon-visit",
       name: "Salon Visit",
@@ -108,6 +111,7 @@ const reportRoutes = {
     },
   ],
 };
+
 
 const storeAdminRoutes = {
   path: "/store-admin",

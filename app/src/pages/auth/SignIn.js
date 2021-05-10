@@ -30,6 +30,7 @@ const SignIn = () => {
           email: response.profileObj.email,
           imageUrl: response.profileObj.imageUrl,
           franchiseId: data.franchiseId,
+          userRoleId: data.userRoleId
         });
         history.push("/dashboard/default");
       })

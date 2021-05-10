@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { connect } from "react-redux";
-import { enableModernTheme } from "../../../redux/actions/themeActions";
+import { enableCorporateTheme } from "../../../redux/actions/themeActions";
 
 import BarChart from "./BarChart";
 import Calendar from "./Calendar";
@@ -16,7 +16,7 @@ import { render } from "react-dom";
 class Default extends React.Component {
   UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(enableModernTheme());
+    dispatch(enableCorporateTheme());
   }
 
   render() {
@@ -30,14 +30,6 @@ class Default extends React.Component {
           </Col>
           <Col lg="4" className="d-flex">
           <BarChart />
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="6" xl="8" className="d-flex">
-            <Projects />
-          </Col>
-          <Col lg="6" xl="4" className="d-flex">
-            <BarChart />
           </Col>
         </Row>
       </Container>
