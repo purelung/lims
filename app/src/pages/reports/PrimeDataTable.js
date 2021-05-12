@@ -152,13 +152,24 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
 
   const header = (
     <div className="p-d-flex p-ai-center export-buttons">
+      {/* 
       <Button
         type="button"
         icon="pi pi-file-o"
         onClick={exportCSV}
         className="p-mr-2"
         data-pr-tooltip="CSV"
-      />
+      />      
+      <Button
+        type="button"
+        icon="pi pi-file-pdf"
+        onClick={exportPdf}
+        className="p-button-warning p-mr-2"
+        data-pr-tooltip="PDF"
+      />      
+      
+      */}
+
       <Button
         type="button"
         icon="pi pi-file-excel"
@@ -166,13 +177,7 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
         className="p-button-success p-mr-2"
         data-pr-tooltip="XLS"
       />
-      <Button
-        type="button"
-        icon="pi pi-file-pdf"
-        onClick={exportPdf}
-        className="p-button-warning p-mr-2"
-        data-pr-tooltip="PDF"
-      />
+
       {/* <Button
         type="button"
         icon="pi pi-filter"

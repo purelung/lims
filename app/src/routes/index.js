@@ -16,7 +16,9 @@ import Page500 from "../pages/auth/Page500";
 
 // Dashboards
 const Default = async(() => import("../pages/dashboards/Default"));
-const SalonVisit = async(() => import("../pages/dashboards/Default/SalonVisit"));
+const SalonMetrics = async(() => import("../pages/dashboards/Default/SalonMetrics"));
+const EmployeeMetrics = async(() => import("../pages/dashboards/Default/EmployeeMetrics"));
+const SalonSchedules = async(() => import("../pages/dashboards/Default/SalonSchedules"));
 
 // Reports
 const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
@@ -46,10 +48,20 @@ const dashboardRoutes = {
     },
   
     {
-      path: "/dashboard/salon-visit",
-      name: "Salon Visit",
-      component: SalonVisit,
+      path: "/dashboard/salon-metrics",
+      name: "Salon Metrics",
+      component: SalonMetrics,
     },
+    {
+      path: "/dashboard/employee-metrics",
+      name: "Employee Metrics",
+      component: EmployeeMetrics,
+    },
+    {
+      path: "/dashboard/salon-schedules",
+      name: "Salon Schedules",
+      component: SalonSchedules,
+    }
   ],
 };
 
