@@ -1,64 +1,74 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { connect } from "react-redux";
-import { enableModernTheme } from "../../../redux/actions/themeActions";
-
 import BarChart from "./BarChart";
-import Calendar from "./Calendar";
-import Feed from "./Feed";
-import Header from "./Header";
-import LineChart from "./LineChart";
-import PieChart from "./PieChart";
-import Projects from "./Projects";
-import Statistics from "./Statistics";
-import { render } from "react-dom";
+import { Report } from "../../../components/QueryReport";
+import { MultiSelect } from "primereact/multiselect";
+import { UserContext } from "../../../contexts/UserContext";
+import { useQuery } from "react-query";
+import {
+  pivotSalonMetricData,
+  getRandomSalonData,
+} from "../../../utilities/salonMetricHandler";
 
-import { MultiSelect } from 'primereact/multiselect';
+import { zeeFetch, fetchOptions } from "../../../utilities/fetchHelper";
 
+const SalonMetrics = ({}) => {
+  const [graphData, setGraphData] = useState({
+    graphData: { dataThisYear: [], dataLastYear: [] },
+  });
+  const { user } = useContext(UserContext);
+  const [selectedSalons, setSelectedSalons] = useState([]);
+  const [salonOptions, setSalonOptions] = useState([]);
+  const queryPath = "dashboardMetrics";
+  const { isLoading, error, data } = useQuery({
+    queryKey: "dashboardMetrics",
+    queryFn: async () => {
+      const data = await zeeFetch(user.authToken, "dashboardMetrics");
+      console.log(data);
+      const randomizedData = getRandomSalonData(data);
+      const salons = randomizedData.map((d) => d.salon.toString());
+      setSelectedSalons(salons);
+      setSalonOptions(salons);
+      return randomizedData;
+    },
+    ...fetchOptions,
+  });
 
-const citySelectItems = [
-  {label: 'New York', value: 'NY'},
-  {label: 'Rome', value: 'RM'},
-  {label: 'London', value: 'LDN'},
-  {label: 'Istanbul', value: 'IST'},
-  {label: 'Paris', value: 'PRS'}
-];
-const cities = [
-  {name: 'New York', code: 'NY'},
-  {name: 'Rome', code: 'RM'},
-  {name: 'London', code: 'LDN'},
-  {name: 'Istanbul', code: 'IST'},
-  {name: 'Paris', code: 'PRS'}
-];
+  const pivotedData = data
+    ? pivotSalonMetricData(
+        data.filter((d) => selectedSalons.includes(d.salon.toString()))
+      )
+    : data;
 
+  return (
+    <Container fluid className="p-0">
+      <Row>
+        <Col lg="6" xl="8" className="d-flex">
+          <Report
+            title={"Salon Metrics"}
+            onRowSelected={(row) =>
+              setGraphData({
+                title: row.GridRowHeader,
+                graphData: row.GraphData,
+              })
+            }
+            rows={pivotedData}
+          >
+            <MultiSelect
+              selectedItemsLabel={"Select Salons"}
+              value={selectedSalons}
+              options={salonOptions}
+              onChange={(e) => setSelectedSalons(e.value)}
+              style={{ marginBottom: 20 }}
+            />
+          </Report>
+        </Col>
+        <Col lg="6" xl="4" className="d-flex">
+          <BarChart {...graphData} />
+        </Col>
+      </Row>
+    </Container>
+  );
+};
 
-class SalonMetrics extends React.Component {
-
-  
-  render() {
-    return (
-      <Container fluid className="p-0">
-    
-    <h1 className="h3 mb-3">Salon Metrics Dashboard</h1>
-    <Row className="mb-2 mb-xl-4">
-      <Col xs="auto" className="d-none d-sm-block">
-        
-      </Col>
-      
- 
-    </Row>
-        
-        <Row>
-          <Col lg="6" xl="8" className="d-flex">
-            <Projects />
-          </Col>
-          <Col lg="6" xl="4" className="d-flex">
-            <BarChart />
-          </Col>
-        </Row>
-      </Container>
-    );
-  }
-}
-
-export default connect()(SalonMetrics);
+export default SalonMetrics;

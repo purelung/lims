@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import styled from "styled-components";
@@ -27,8 +27,15 @@ const getColumnWidthFromHeaderName = (columnName) => {
   return width > minWidth ? width : minWidth;
 };
 
-const PrimeDataTable = ({ title, rows, rowGroup = "" }) => {
-  if (rows.length === 0) {
+const PrimeDataTable = ({
+  children,
+  title,
+  rows,
+  onRowSelected,
+  keepExpanded,
+  rowGroup = "",
+}) => {
+  if (rows === undefined || rows.length === 0) {
     return <div />;
   } else {
     const columnNames = rows.length === 0 ? [] : Object.keys(rows[0]);
@@ -44,18 +51,33 @@ const PrimeDataTable = ({ title, rows, rowGroup = "" }) => {
         title={title}
         rows={rows}
         rowGroup={rowGroup}
-      />
+        onRowSelected={onRowSelected}
+        keepExpanded={keepExpanded}
+      >
+        {children}
+      </PrimeDataTableInner>
     );
   }
 };
 
-const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
+const PrimeDataTableInner = ({
+  children,
+  columns,
+  title,
+  rows,
+  onRowSelected,
+  keepExpanded,
+  rowGroup = "",
+}) => {
   const [selectedColumns, setSelectedColumns] = useState(columns);
   const exportColumns = columns.map((col) => ({
     title: col.header,
     dataKey: col.field,
   }));
-  const [expandedRows, setExpandedRows] = useState([]);
+  const [expandedRows, setExpandedRows] = useState(keepExpanded ? rows : []);
+  const [selectedRow, setSelectedRow] = useState({});
+
+  console.log(expandedRows);
 
   const onColumnToggle = (event) => {
     let _selectedColumns = event.value;
@@ -65,24 +87,20 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
     setSelectedColumns(orderedSelectedColumns);
   };
 
-  // const header = (
-  //   <div style={{ textAlign: "left" }}>
-  //     <MultiSelect
-  //       value={selectedColumns}
-  //       options={columnsForSelection}
-  //       optionLabel="header"
-  //       onChange={onColumnToggle}
-  //       style={{ width: "20em" }}
-  //     />
-  //   </div>
-  // );
-
   const sparkTemplate = (rowData, columnName) => {
     return (
       <Sparklines data={rowData[columnName].split(",")}>
         <SparklinesLine color="blue" />
       </Sparklines>
     );
+  };
+
+  const gridRowHeaderTemplate = (rowData, columnName) => {
+    const StyledGridRowHeader = styled.div`
+      font-weight: 600;
+    `;
+
+    return <StyledGridRowHeader>{rowData[columnName]}</StyledGridRowHeader>;
   };
 
   const headerTemplate = (data) => {
@@ -94,7 +112,7 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
   };
 
   const footerTemplate = (data) => {
-    return <div />;
+    return <td />;
   };
 
   const onRowGroupExpand = (event) => {};
@@ -107,21 +125,6 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
   const paginatorRight = (
     <Button type="button" icon="pi pi-cloud" className="p-button-text" />
   );
-
-  const exportCSV = () => {
-    const csvExporter = new ExportToCsv({ title });
-    csvExporter.generateCsv(rows);
-  };
-
-  const exportPdf = () => {
-    import("jspdf").then((jsPDF) => {
-      import("jspdf-autotable").then(() => {
-        const doc = new jsPDF.default(0, 0);
-        doc.autoTable(exportColumns, rows);
-        doc.save(title + ".pdf");
-      });
-    });
-  };
 
   const exportExcel = () => {
     import("xlsx").then((xlsx) => {
@@ -152,24 +155,6 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
 
   const header = (
     <div className="p-d-flex p-ai-center export-buttons">
-      {/* 
-      <Button
-        type="button"
-        icon="pi pi-file-o"
-        onClick={exportCSV}
-        className="p-mr-2"
-        data-pr-tooltip="CSV"
-      />      
-      <Button
-        type="button"
-        icon="pi pi-file-pdf"
-        onClick={exportPdf}
-        className="p-button-warning p-mr-2"
-        data-pr-tooltip="PDF"
-      />      
-      
-      */}
-
       <Button
         type="button"
         icon="pi pi-file-excel"
@@ -177,14 +162,6 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
         className="p-button-success p-mr-2"
         data-pr-tooltip="XLS"
       />
-
-      {/* <Button
-        type="button"
-        icon="pi pi-filter"
-        onClick={() => exportCSV(true)}
-        className="p-button-info p-ml-auto"
-        data-pr-tooltip="Selection Only"
-      /> */}
     </div>
   );
 
@@ -203,18 +180,27 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
         }
       : {};
 
+  const setSelectedRowAndGraphData = (row) => {
+    setSelectedRow(row);
+    onRowSelected(row);
+  };
+
   return (
     <StyledContainer>
       <div className="datatable-rowgroup-demo datatable-filter-demo datatable-scroll-demo">
         <Card title={title}>
+          {children}
           <DataTable
             header={header}
             className="p-datatable-sm"
             style={{
               width: "100%",
             }}
+            selectionMode="single"
+            selection={selectedRow}
+            onSelectionChange={(e) => setSelectedRowAndGraphData(e.value)}
             scrollable
-            resizableColumns="true"
+            resizableColumns={true}
             columnResizeMode="expand"
             value={rows}
             sortMode="single"
@@ -229,32 +215,41 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
             paginatorLeft={paginatorLeft}
             paginatorRight={paginatorRight}
           >
-            {selectedColumns.map((c, i) => {
-              const rendererProps =
-                c.field.indexOf("_Spark") > -1
+            {selectedColumns
+              .filter((c) => c.field !== "GraphData")
+              .map((c, i) => {
+                const rendererProps = c.field.includes("_Spark")
                   ? {
                       header: "-> Trend",
                       body: (rowData) => sparkTemplate(rowData, c.field),
                       headerStyle: { width: 150 },
                     }
+                  : c.field === "GridRowHeader"
+                  ? {
+                      header: "",
+                      body: (rowData) =>
+                        gridRowHeaderTemplate(rowData, c.field),
+                      headerStyle: { width: 150 },
+                    }
                   : {};
 
-              return (
-                <Column
-                  key={c.field}
-                  field={c.field}
-                  header={c.header}
-                  sortable={
-                    rowGroup === "" || (rowGroup !== "" && rowGroup === c.field)
-                  }
-                  filter={i === 0}
-                  filterPlaceholder={"Search"}
-                  headerStyle={{ width: c.width }}
-                  columnKey={c.field}
-                  {...rendererProps}
-                ></Column>
-              );
-            })}
+                return (
+                  <Column
+                    key={c.field}
+                    field={c.field}
+                    header={c.header}
+                    sortable={
+                      rowGroup === "" ||
+                      (rowGroup !== "" && rowGroup === c.field)
+                    }
+                    filter={i === 0 && c.field !== "GridRowHeader"}
+                    filterPlaceholder={"Search"}
+                    headerStyle={{ width: c.width }}
+                    columnKey={c.field}
+                    {...rendererProps}
+                  ></Column>
+                );
+              })}
           </DataTable>
         </Card>
       </div>
@@ -263,7 +258,6 @@ const PrimeDataTableInner = ({ columns, title, rows, rowGroup = "" }) => {
 };
 
 export default PrimeDataTable;
-
 
 const StyledContainer = styled.div`
   .p-column-filter {

@@ -1,16 +1,20 @@
 import React from "react";
 import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
-
+import { QueryClient, QueryClientProvider } from "react-query";
 import store from "./redux/store/index";
 import Routes from "./routes/Routes";
 import { UserProvider } from "./contexts/UserContext";
 
+const queryClient = new QueryClient();
+
 const App = () => (
   <Provider store={store}>
-    <UserProvider>
-      <Routes />
-    </UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <Routes />
+      </UserProvider>
+    </QueryClientProvider>
     <ReduxToastr
       timeOut={5000}
       newestOnTop={true}

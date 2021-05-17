@@ -13,12 +13,16 @@ import ResetPassword from "../pages/auth/ResetPassword";
 import Page404 from "../pages/auth/Page404";
 import Page500 from "../pages/auth/Page500";
 
-
 // Dashboards
-const Default = async(() => import("../pages/dashboards/Default"));
-const SalonMetrics = async(() => import("../pages/dashboards/Default/SalonMetrics"));
-const EmployeeMetrics = async(() => import("../pages/dashboards/Default/EmployeeMetrics"));
-const SalonSchedules = async(() => import("../pages/dashboards/Default/SalonSchedules"));
+const SalonMetrics = async(() =>
+  import("../pages/dashboards/Default/SalonMetrics")
+);
+const EmployeeMetrics = async(() =>
+  import("../pages/dashboards/Default/EmployeeMetrics")
+);
+const SalonSchedules = async(() =>
+  import("../pages/dashboards/Default/SalonSchedules")
+);
 
 // Reports
 const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
@@ -44,9 +48,9 @@ const dashboardRoutes = {
       path: "/dashboard/default",
       name: "Home",
       hidden: true,
-      component: Default,
+      component: SalonMetrics,
     },
-  
+
     {
       path: "/dashboard/salon-metrics",
       name: "Salon Metrics",
@@ -61,7 +65,7 @@ const dashboardRoutes = {
       path: "/dashboard/salon-schedules",
       name: "Salon Schedules",
       component: SalonSchedules,
-    }
+    },
   ],
 };
 
@@ -123,7 +127,6 @@ const reportRoutes = {
     },
   ],
 };
-
 
 const storeAdminRoutes = {
   path: "/store-admin",

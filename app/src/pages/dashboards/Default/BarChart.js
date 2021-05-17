@@ -10,77 +10,65 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
-  UncontrolledDropdown
+  UncontrolledDropdown,
 } from "reactstrap";
 
 import { MoreHorizontal } from "react-feather";
 
-const BarChart = ({ theme }) => {
+const BarChart = ({ title, theme, graphData }) => {
+  const { dataThisYear, dataLastYear } = graphData;
   const data = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ],
+    labels: ["W1", "W2", "W3", "W4"],
     datasets: [
       {
-        label: "Last year",
+        label: "This year",
         backgroundColor: theme.primary,
         borderColor: theme.primary,
         hoverBackgroundColor: theme.primary,
         hoverBorderColor: theme.primary,
-        data: [54, 67, 41, 55, 62, 45, 55, 73, 60, 76, 48, 79],
+        data: dataThisYear,
         barPercentage: 0.75,
-        categoryPercentage: 0.5
+        categoryPercentage: 0.5,
       },
       {
-        label: "This year",
+        label: "Last year",
         backgroundColor: "#E8EAED",
         borderColor: "#E8EAED",
         hoverBackgroundColor: "#E8EAED",
         hoverBorderColor: "#E8EAED",
-        data: [69, 66, 24, 48, 52, 51, 44, 53, 62, 79, 51, 68],
+        data: dataLastYear,
         barPercentage: 0.75,
-        categoryPercentage: 0.5
-      }
-    ]
+        categoryPercentage: 0.5,
+      },
+    ],
   };
 
   const options = {
     maintainAspectRatio: false,
     legend: {
-      display: false
+      display: false,
     },
     scales: {
       yAxes: [
         {
           gridLines: {
-            display: false
+            display: false,
           },
           stacked: false,
           ticks: {
-            stepSize: 20
-          }
-        }
+            stepSize: 20,
+          },
+        },
       ],
       xAxes: [
         {
           stacked: false,
           gridLines: {
-            color: "transparent"
-          }
-        }
-      ]
-    }
+            color: "transparent",
+          },
+        },
+      ],
+    },
   };
 
   return (
@@ -99,7 +87,7 @@ const BarChart = ({ theme }) => {
           </UncontrolledDropdown>
         </div>
         <CardTitle tag="h5" className="mb-0">
-          Sales / Revenue
+          {title}
         </CardTitle>
       </CardHeader>
       <CardBody className="d-flex">
@@ -113,6 +101,6 @@ const BarChart = ({ theme }) => {
   );
 };
 
-export default connect(store => ({
-  theme: store.theme.currentTheme
+export default connect((store) => ({
+  theme: store.theme.currentTheme,
 }))(BarChart);
