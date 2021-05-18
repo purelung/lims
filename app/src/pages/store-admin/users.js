@@ -117,7 +117,7 @@ const Table = () => {
               size={18}
               onClick={() =>
                 history.push(
-                  "/dashboard/store-admin/edit-user?userId=" + row.id
+                  "/store-admin/edit-user?userId=" + row.id
                 )
               }
             />
