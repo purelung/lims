@@ -140,7 +140,7 @@ const Table = () => {
         <CardTitle tag="h5">Manage franchise users</CardTitle>
         <StyledUserPlus
           size={40}
-          onClick={() => history.push("/dashboard/store-admin/add-user")}
+          onClick={() => history.push("/store-admin/add-user")}
         />
       </StyledCardHeader>
       <CardBody>
