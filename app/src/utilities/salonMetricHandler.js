@@ -95,6 +95,22 @@ export const pivotSalonMetricData = (data) => {
     return (sum / divisor).toFixed(2);
   };
 
+  const getTrendSums = (data, start, end) => {
+    let trendSums = [];
+
+    if (!data || data.length === 0) {
+      return trendSums;
+    }
+
+    let index = 0;
+    for (let dataIndex = start; dataIndex < end; dataIndex++) {
+      trendSums[index] = data.sum(dataIndex);
+      index++;
+    }
+
+    return trendSums;
+  };
+
   const gridColumnMetaData = [
     {
       header: "Last 4 Weeks",
@@ -114,23 +130,27 @@ export const pivotSalonMetricData = (data) => {
     {
       header: "GraphData",
       algorithm: (columnSumSource, columnDivisorSumSource) => {
-        const trends = data.map((r) =>
-          r[columnSumSource + "_trend"]
-            .split(",")
-            .slice(0, 4)
-            .map((s) => parseFloat(s))
+        if (
+          !data ||
+          data.length === 0 ||
+          !data[0][columnSumSource + "_trend"]
+        ) {
+          return {
+            dataLastYear: [],
+            dataThisYear: [],
+          };
+        }
+
+        const trendData = data.map((r) =>
+          r[columnSumSource + "_trend"].split(",").map((s) => parseFloat(s))
         );
 
-        const dataLastYear = [
-          trends.sum(0),
-          trends.sum(1),
-          trends.sum(2),
-          trends.sum(3),
-        ];
+        const length = trendData[0].length;
+        const half = Math.ceil(length / 2);
 
         return {
-          dataLastYear,
-          dataThisYear: randomizeArrayValues(dataLastYear, true),
+          dataLastYear: getTrendSums(trendData, half, length),
+          dataThisYear: getTrendSums(trendData, 0, half),
         };
       },
     },

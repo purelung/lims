@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Button } from "reactstrap";
 import BarChart from "./BarChart";
 import { Report } from "../../../components/QueryReport";
 import { MultiSelect } from "primereact/multiselect";
 import { UserContext } from "../../../contexts/UserContext";
-import { useQuery } from "react-query";
+import { Overlay, Spinner, showToast } from "../../../components";
+import { useQuery, useQueryClient } from "react-query";
 import {
   pivotSalonMetricData,
   getRandomSalonData,
@@ -19,29 +20,51 @@ const SalonMetrics = ({}) => {
   const { user } = useContext(UserContext);
   const [selectedSalons, setSelectedSalons] = useState([]);
   const [salonOptions, setSalonOptions] = useState([]);
+  const queryClient = useQueryClient();
   const queryPath = "dashboardMetrics";
   const { isLoading, error, data } = useQuery({
-    queryKey: "dashboardMetrics",
+    queryKey: queryPath,
     queryFn: async () => {
-      const data = await zeeFetch(user.authToken, "dashboardMetrics");
+      let data = await zeeFetch(user.authToken, queryPath);
       console.log(data);
-      const randomizedData = getRandomSalonData(data);
-      const salons = randomizedData.map((d) => d.salon.toString());
+      const salons = data.map((d) => d.storeid.toString());
       setSelectedSalons(salons);
       setSalonOptions(salons);
-      return randomizedData;
+      return data;
     },
     ...fetchOptions,
   });
 
   const pivotedData = data
     ? pivotSalonMetricData(
-        data.filter((d) => selectedSalons.includes(d.salon.toString()))
+        data.filter((d) => selectedSalons.includes(d.storeid.toString()))
       )
     : data;
 
+  if (error) {
+    showToast(
+      "error",
+      "Unable to retrieve data from server.  Check console logs"
+    );
+    console.log(error);
+  }
+
   return (
     <Container fluid className="p-0">
+      {isLoading ? (
+        <Overlay height="100vh" width="100vw">
+          <Spinner />
+        </Overlay>
+      ) : (
+        <div />
+      )}
+      <Button
+        style={{ marginBottom: 15 }}
+        color="primary"
+        onClick={() => queryClient.invalidateQueries(queryPath)}
+      >
+        Refresh
+      </Button>
       <Row>
         <Col lg="6" xl="8" className="d-flex">
           <Report

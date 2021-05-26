@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Overlay, Spinner, showToast } from "./";
 import { UserContext } from "../contexts/UserContext";
-import { useQuery } from "react-query";
-import { Container } from "reactstrap";
+import { useQuery, useQueryClient } from "react-query";
+import { Container, Button } from "reactstrap";
 import PrimeDataTable from "./PrimeDataTable";
 import { zeeFetch, fetchOptions } from "../utilities/fetchHelper";
 
@@ -16,7 +16,7 @@ export const Report = ({
   keepExpanded,
 }) => {
   return (
-    <Container fluid className="p-0">
+    <div>
       {isLoading ? (
         <Overlay height="100vh" width="100vw">
           <Spinner />
@@ -33,7 +33,7 @@ export const Report = ({
       >
         {children}
       </PrimeDataTable>
-    </Container>
+    </div>
   );
 };
 
@@ -46,6 +46,27 @@ export const QueryReport = ({
   keepExpanded,
 }) => {
   const { user } = useContext(UserContext);
+  const queryClient = useQueryClient();
+
+  // const [data, setData] = useState([]);
+  // const [error, setError] = useState([]);
+  // const [isLoading, setIsLoading] = useState([]);
+
+  // const fetchData = async () => {
+  //   setIsLoading(true);
+
+  //   try {
+  //     const data = await zeeFetch(user.authToken, queryPath);
+  //     setData(data);
+  //   } catch (error) {
+  //     showToast("error", "Unable to retrieve rankings.  Check console logs");
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const { isLoading, error, data } = useQuery({
     queryKey: queryPath,
@@ -61,16 +82,27 @@ export const QueryReport = ({
     console.log(error);
   }
 
+  const rows = data ?? [];
+
   return (
-    <Report
-      isLoading={isLoading}
-      rows={data}
-      title={title}
-      onRowSelected={onRowSelected}
-      rowGroup={rowGroup}
-      keepExpanded={keepExpanded}
-    >
-      {children}
-    </Report>
+    <Container fluid className="p-0">
+      <Button
+        style={{ marginBottom: 15 }}
+        color="primary"
+        onClick={() => queryClient.invalidateQueries(queryPath)}
+      >
+        Refresh
+      </Button>
+      <Report
+        isLoading={isLoading}
+        rows={data}
+        title={title}
+        onRowSelected={onRowSelected}
+        rowGroup={rowGroup}
+        keepExpanded={keepExpanded}
+      >
+        {children}
+      </Report>
+    </Container>
   );
 };

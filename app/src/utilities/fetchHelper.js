@@ -14,4 +14,7 @@ export const zeeFetch = async (authToken, queryPath) => {
   return data;
 };
 
-export const fetchOptions = {};
+export const fetchOptions = {
+  retry: false,
+  staleTime: 1000 * 60 * 30,
+};

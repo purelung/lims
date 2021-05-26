@@ -18,7 +18,7 @@ import { MoreHorizontal } from "react-feather";
 const BarChart = ({ title, theme, graphData }) => {
   const { dataThisYear, dataLastYear } = graphData;
   const data = {
-    labels: ["W1", "W2", "W3", "W4"],
+    labels: dataThisYear.map((d, i) => `W${i + 1}`),
     datasets: [
       {
         label: "This year",

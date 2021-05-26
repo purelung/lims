@@ -35,7 +35,7 @@ const PrimeDataTable = ({
   keepExpanded,
   rowGroup = "",
 }) => {
-  if (rows === undefined || rows.length === 0) {
+  if (rows === undefined) {
     return <div />;
   } else {
     const columnNames = rows.length === 0 ? [] : Object.keys(rows[0]);
@@ -76,8 +76,6 @@ const PrimeDataTableInner = ({
   }));
   const [expandedRows, setExpandedRows] = useState(keepExpanded ? rows : []);
   const [selectedRow, setSelectedRow] = useState({});
-
-  console.log(expandedRows);
 
   const onColumnToggle = (event) => {
     let _selectedColumns = event.value;
