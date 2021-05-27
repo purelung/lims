@@ -48,6 +48,8 @@ export const getRandomSalonData = (data) => {
 };
 
 export const pivotSalonMetricData = (data) => {
+  if (!data || data.length === 0) return [];
+
   const gridRowMetaData = [
     { header: "Revenue Per Day", columnSumSource: "revenue" },
     { header: "Retail Per Day", columnSumSource: "retail" },

@@ -68,11 +68,11 @@ export const QueryReport = ({
   //   fetchData();
   // }, []);
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: queryPath,
-    queryFn: async () => zeeFetch(user.authToken, queryPath),
-    ...fetchOptions,
-  });
+  const { isLoading, isFetching, error, data } = useQuery(
+    queryPath,
+    () => zeeFetch(user.authToken, queryPath),
+    { ...fetchOptions }
+  );
 
   if (error) {
     showToast(
@@ -81,8 +81,6 @@ export const QueryReport = ({
     );
     console.log(error);
   }
-
-  const rows = data ?? [];
 
   return (
     <Container fluid className="p-0">
@@ -94,7 +92,7 @@ export const QueryReport = ({
         Refresh
       </Button>
       <Report
-        isLoading={isLoading}
+        isLoading={isLoading || isFetching}
         rows={data}
         title={title}
         onRowSelected={onRowSelected}

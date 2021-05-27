@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { Container, Row, Col, Button } from "reactstrap";
 import BarChart from "./BarChart";
 import { Report } from "../../../components/QueryReport";
@@ -22,24 +22,29 @@ const SalonMetrics = ({}) => {
   const [salonOptions, setSalonOptions] = useState([]);
   const queryClient = useQueryClient();
   const queryPath = "dashboardMetrics";
-  const { isLoading, error, data } = useQuery({
-    queryKey: queryPath,
-    queryFn: async () => {
-      let data = await zeeFetch(user.authToken, queryPath);
-      console.log(data);
-      const salons = data.map((d) => d.storeid.toString());
-      setSelectedSalons(salons);
-      setSalonOptions(salons);
-      return data;
-    },
-    ...fetchOptions,
-  });
+  const { isLoading, isFetching, error, data } = useQuery(
+    queryPath,
+    () => zeeFetch(user.authToken, queryPath),
+    {
+      ...fetchOptions,
+      select: (data) => {
+        if (salonOptions.length === 0) {
+          const salons = data.map((d) => d.storeid.toString());
+          setSelectedSalons(salons);
+          setSalonOptions(salons);
+        }
+        return data;
+      },
+    }
+  );
 
-  const pivotedData = data
-    ? pivotSalonMetricData(
-        data.filter((d) => selectedSalons.includes(d.storeid.toString()))
-      )
-    : data;
+  const pivotedData = useMemo(() => {
+    return data
+      ? pivotSalonMetricData(
+          data.filter((d) => selectedSalons.includes(d.storeid.toString()))
+        )
+      : undefined;
+  }, [data, selectedSalons]);
 
   if (error) {
     showToast(
@@ -51,7 +56,7 @@ const SalonMetrics = ({}) => {
 
   return (
     <Container fluid className="p-0">
-      {isLoading ? (
+      {isLoading || isFetching ? (
         <Overlay height="100vh" width="100vw">
           <Spinner />
         </Overlay>

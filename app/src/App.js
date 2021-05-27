@@ -6,7 +6,13 @@ import store from "./redux/store/index";
 import Routes from "./routes/Routes";
 import { UserProvider } from "./contexts/UserContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      //notifyOnChangeProps: "tracked",
+    },
+  },
+});
 
 const App = () => (
   <Provider store={store}>

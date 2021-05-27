@@ -189,6 +189,7 @@ const PrimeDataTableInner = ({
         <Card title={title}>
           {children}
           <DataTable
+            key={`${title}${rows.length}`}
             header={header}
             className="p-datatable-sm"
             style={{
