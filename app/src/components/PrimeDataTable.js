@@ -34,6 +34,7 @@ const PrimeDataTable = ({
   onRowSelected,
   keepExpanded,
   rowGroup = "",
+  usePaging = true,
 }) => {
   if (rows === undefined) {
     return <div />;
@@ -53,6 +54,7 @@ const PrimeDataTable = ({
         rowGroup={rowGroup}
         onRowSelected={onRowSelected}
         keepExpanded={keepExpanded}
+        usePaging={usePaging}
       >
         {children}
       </PrimeDataTableInner>
@@ -68,6 +70,7 @@ const PrimeDataTableInner = ({
   onRowSelected,
   keepExpanded,
   rowGroup = "",
+  usePaging = true,
 }) => {
   const [selectedColumns, setSelectedColumns] = useState(columns);
   const exportColumns = columns.map((col) => ({
@@ -163,6 +166,20 @@ const PrimeDataTableInner = ({
     </div>
   );
 
+  const paginatorProps = usePaging
+    ? {
+        paginator: true,
+        paginatorTemplate:
+          "CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown",
+        currentPageReportTemplate:
+          "Showing {first} to {last} of {totalRecords}",
+        rows: 50,
+        rowsPerPageOptions: [10, 20, 50, 100],
+        paginatorLeft: paginatorLeft,
+        paginatorRight: paginatorRight,
+      }
+    : {};
+
   const groupProps =
     rowGroup !== ""
       ? {
@@ -206,13 +223,7 @@ const PrimeDataTableInner = ({
             sortField={rowGroup}
             sortOrder={1}
             {...groupProps}
-            paginator
-            paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-            rows={50}
-            rowsPerPageOptions={[10, 20, 50, 100]}
-            paginatorLeft={paginatorLeft}
-            paginatorRight={paginatorRight}
+            {...paginatorProps}
           >
             {selectedColumns
               .filter((c) => c.field !== "GraphData")

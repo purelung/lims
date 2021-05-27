@@ -2,9 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { Overlay, Spinner, showToast } from "./";
 import { UserContext } from "../contexts/UserContext";
 import { useQuery, useQueryClient } from "react-query";
-import { Container, Button } from "reactstrap";
+import {
+  Container,
+  Button,
+  Row,
+  Col,
+  Label,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+} from "reactstrap";
 import PrimeDataTable from "./PrimeDataTable";
 import { zeeFetch, fetchOptions } from "../utilities/fetchHelper";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 export const Report = ({
   children,
@@ -14,6 +27,7 @@ export const Report = ({
   onRowSelected,
   rowGroup,
   keepExpanded,
+  usePaging = true,
 }) => {
   return (
     <div>
@@ -30,6 +44,7 @@ export const Report = ({
         onRowSelected={onRowSelected}
         rowGroup={rowGroup}
         keepExpanded={keepExpanded}
+        usePaging={usePaging}
       >
         {children}
       </PrimeDataTable>
@@ -44,33 +59,28 @@ export const QueryReport = ({
   onRowSelected,
   rowGroup,
   keepExpanded,
+  useDateFilter = false,
 }) => {
   const { user } = useContext(UserContext);
   const queryClient = useQueryClient();
 
-  // const [data, setData] = useState([]);
-  // const [error, setError] = useState([]);
-  // const [isLoading, setIsLoading] = useState([]);
+  var today = new Date();
+  var oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const [startDate, setStartDate] = useState(oneWeekAgo);
+  const [endDate, setEndDate] = useState(today);
 
-  // const fetchData = async () => {
-  //   setIsLoading(true);
+  const queryId = [queryPath, startDate, endDate];
 
-  //   try {
-  //     const data = await zeeFetch(user.authToken, queryPath);
-  //     setData(data);
-  //   } catch (error) {
-  //     showToast("error", "Unable to retrieve rankings.  Check console logs");
-  //     console.log(error);
-  //   }
-  // };
+  let options = {};
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  if (useDateFilter) {
+    options = { ...options, startDate, endDate };
+  }
 
   const { isLoading, isFetching, error, data } = useQuery(
-    queryPath,
-    () => zeeFetch(user.authToken, queryPath),
+    queryId,
+    () => zeeFetch(user.authToken, queryPath, options),
     { ...fetchOptions }
   );
 
@@ -87,20 +97,52 @@ export const QueryReport = ({
       <Button
         style={{ marginBottom: 15 }}
         color="primary"
-        onClick={() => queryClient.invalidateQueries(queryPath)}
+        onClick={() => queryClient.invalidateQueries(queryId)}
       >
         Refresh
       </Button>
-      <Report
-        isLoading={isLoading || isFetching}
-        rows={data}
-        title={title}
-        onRowSelected={onRowSelected}
-        rowGroup={rowGroup}
-        keepExpanded={keepExpanded}
-      >
-        {children}
-      </Report>
+      {useDateFilter ? (
+        <Row>
+          <Col>
+            <Card>
+              <CardBody>
+                <CardTitle tag="h5">Start Date</CardTitle>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <Card>
+              <CardBody>
+                <CardTitle tag="h5">End Date</CardTitle>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      ) : (
+        <div />
+      )}
+      <Row>
+        <Col>
+          <Report
+            isLoading={isLoading || isFetching}
+            rows={data}
+            title={title}
+            onRowSelected={onRowSelected}
+            rowGroup={rowGroup}
+            keepExpanded={keepExpanded}
+          >
+            {children}
+          </Report>
+        </Col>
+      </Row>
     </Container>
   );
 };

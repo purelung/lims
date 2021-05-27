@@ -15,7 +15,7 @@ import {
 
 import { MoreHorizontal } from "react-feather";
 
-const BarChart = ({ title, theme, graphData }) => {
+const BarChartInner = ({ title, theme, graphData }) => {
   const { dataThisYear, dataLastYear } = graphData;
   const data = {
     labels: dataThisYear.map((d, i) => `W${i + 1}`),
@@ -101,6 +101,6 @@ const BarChart = ({ title, theme, graphData }) => {
   );
 };
 
-export default connect((store) => ({
+export const BarChart = connect((store) => ({
   theme: store.theme.currentTheme,
-}))(BarChart);
+}))(BarChartInner);

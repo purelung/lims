@@ -1,5 +1,5 @@
 import React from "react";
-import { QueryReport } from "../../../components/QueryReport";
+import { QueryReport } from "../../components/QueryReport";
 
 const SalonSchedules = () => {
   return (

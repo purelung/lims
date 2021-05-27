@@ -14,14 +14,13 @@ import Page404 from "../pages/auth/Page404";
 import Page500 from "../pages/auth/Page500";
 
 // Dashboards
-const SalonMetrics = async(() =>
-  import("../pages/dashboards/Default/SalonMetrics")
-);
+const Landing = async(() => import("../pages/dashboards/Landing"));
+const SalonMetrics = async(() => import("../pages/dashboards/SalonMetrics"));
 const EmployeeMetrics = async(() =>
-  import("../pages/dashboards/Default/EmployeeMetrics")
+  import("../pages/dashboards/EmployeeMetrics")
 );
 const SalonSchedules = async(() =>
-  import("../pages/dashboards/Default/SalonSchedules")
+  import("../pages/dashboards/SalonSchedules")
 );
 
 // Reports
@@ -39,8 +38,6 @@ const dashboardRoutes = {
   path: "/dashboard",
   name: "Dashboards",
   header: "Pages",
-  // badgeColor: "primary",
-  // badgeText: "5",
   icon: SlidersIcon,
   containsHome: true,
   children: [
@@ -48,7 +45,7 @@ const dashboardRoutes = {
       path: "/dashboard/default",
       name: "Home",
       hidden: true,
-      component: SalonMetrics,
+      component: Landing,
     },
 
     {
