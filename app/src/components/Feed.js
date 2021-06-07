@@ -17,7 +17,7 @@ export const Feed = ({ items }) => (
         Today
       </Badge> */}
       <CardTitle tag="h5" className="mb-0">
-        Daily feed
+        Announcements
       </CardTitle>
     </CardHeader>
     <CardBody>

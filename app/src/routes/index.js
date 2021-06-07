@@ -117,11 +117,6 @@ const reportRoutes = {
       name: "Employee Rankings",
       component: EmployeeRankings,
     },
-    {
-      path: "/reports/schedules",
-      name: "Schedules",
-      component: Schedules,
-    },
   ],
 };
 

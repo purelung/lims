@@ -58,7 +58,7 @@ export const pivotSalonMetricData = (data) => {
     { header: "Color Per Day", columnSumSource: "color" },
 
     {
-      header: "Service and Product %",
+      header: "Service & Product %",
       columnSumSource: "servProd",
       columnDivisorSumSource: "guests",
     },

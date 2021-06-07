@@ -151,8 +151,8 @@ const Table = () => {
           bootstrap4
           bordered={false}
           pagination={paginationFactory({
-            sizePerPage: 5,
-            sizePerPageList: [5, 10, 25, 50],
+            sizePerPage: 10,
+            sizePerPageList: [10, 25, 50],
           })}
         />
       </CardBody>
