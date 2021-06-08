@@ -124,7 +124,7 @@ const PrimeDataTableInner = ({
     <Button type="button" icon="pi pi-refresh" className="p-button-text" />
   );
   const paginatorRight = (
-    <Button type="button" icon="pi pi-cloud" className="p-button-text" />
+    <Button type="button" icon="pi pi-file-excel" onClick={exportExcel} className="p-button-success p-mr-2" />
   );
 
   const exportExcel = () => {
