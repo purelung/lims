@@ -154,17 +154,7 @@ const PrimeDataTableInner = ({
     });
   };
 
-  const header = (
-    <div className="p-d-flex p-ai-center export-buttons">
-      <Button
-        type="button"
-        icon="pi pi-file-excel"
-        onClick={exportExcel}
-        className="p-button-success p-mr-2"
-        data-pr-tooltip="XLS"
-      />
-    </div>
-  );
+  const header = ("");
 
   const paginatorProps = usePaging
     ? {
