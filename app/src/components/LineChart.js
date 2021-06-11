@@ -92,7 +92,7 @@ const LineChartInner = ({ theme }) => {
           Monthly
         </Badge>
         <CardTitle tag="h5" className="mb-0">
-          Total Revenue
+          Average Daily Revenue
         </CardTitle>
       </CardHeader>
       <CardBody>
