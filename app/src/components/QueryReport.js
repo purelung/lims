@@ -137,6 +137,7 @@ export const QueryReport = ({
             title={title}
             onRowSelected={onRowSelected}
             rowGroup={rowGroup}
+
             keepExpanded={keepExpanded}
           >
             {children}

@@ -88,6 +88,7 @@ const SalonMetrics = ({}) => {
             }
             rows={pivotedData}
             usePaging={false}
+            order={false}
           >
             {/* <MultiSelect
               selectedItemsLabel={"Select Salons"}

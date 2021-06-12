@@ -68,12 +68,12 @@ export const pivotSalonMetricData = (data) => {
       columnDivisorSumSource: "hours",
     },
     {
-      header: "CPH",
-      columnSumSource: "cuts",
+      header: "Guests Per Hour",
+      columnSumSource: "guests",
       columnDivisorSumSource: "hours",
     },
     {
-      header: "Retail Per Cut",
+      header: "Retail Per Guest",
       columnSumSource: "retail",
       columnDivisorSumSource: "cuts",
     },

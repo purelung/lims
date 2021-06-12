@@ -156,6 +156,7 @@ const PrimeDataTableInner = ({
 
   const header = ("");
 
+
   const paginatorProps = usePaging
     ? {
         paginator: true,
@@ -209,6 +210,7 @@ const PrimeDataTableInner = ({
             resizableColumns={true}
             columnResizeMode="expand"
             value={rows}
+ 
             sortMode="single"
             sortField={rowGroup}
             sortOrder={1}
