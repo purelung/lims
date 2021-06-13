@@ -3,7 +3,7 @@ import { QueryReport } from "../../components/QueryReport";
 
 const EmployeeRankings = () => {
   return (
-    <QueryReport title={"Employee Rankings"} queryPath={"employee-rankings"} />
+    <QueryReport title={"Employee Rankings"} queryPath={"employee-rankings"} useDateFilter={"true"}/>
   );
 };
 

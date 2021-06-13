@@ -94,13 +94,7 @@ export const QueryReport = ({
 
   return (
     <Container fluid className="p-0">
-      <Button
-        style={{ marginBottom: 15 }}
-        color="primary"
-        onClick={() => queryClient.invalidateQueries(queryId)}
-      >
-        Refresh
-      </Button>
+
       {useDateFilter ? (
         <Row>
           <Col>
