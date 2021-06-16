@@ -154,7 +154,17 @@ const PrimeDataTableInner = ({
     });
   };
 
-  const header = ("");
+  const header = (
+    
+      <Button
+        type="button"
+        icon="pi pi-file-excel"
+        onClick={exportExcel}
+        className="p-button-success p-mr-2"
+        data-pr-tooltip="XLS"
+      />
+   
+  );
 
 
   const paginatorProps = usePaging
@@ -165,7 +175,7 @@ const PrimeDataTableInner = ({
         currentPageReportTemplate:
           "Showing {first} to {last} of {totalRecords}",
         rows: 50,
-        rowsPerPageOptions: [10, 20, 50, 100],
+        rowsPerPageOptions: [10, 20, 50, 100, 250],
         paginatorLeft: paginatorLeft,
         paginatorRight: paginatorRight,
       }
@@ -194,7 +204,7 @@ const PrimeDataTableInner = ({
   return (
     <StyledContainer>
       <div className="datatable-rowgroup-demo datatable-filter-demo datatable-scroll-demo">
-        <Card title={title}>
+        <Card title={title} >
           {children}
           <DataTable
             key={`${title}${rows.length}`}
