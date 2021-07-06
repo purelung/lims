@@ -34,6 +34,7 @@ const PrimeDataTable = ({
   onRowSelected,
   keepExpanded,
   rowGroup = "",
+  refreshFn,
   usePaging = true,
 }) => {
   if (rows === undefined) {
@@ -55,6 +56,7 @@ const PrimeDataTable = ({
         onRowSelected={onRowSelected}
         keepExpanded={keepExpanded}
         usePaging={usePaging}
+        refreshFn={refreshFn}
       >
         {children}
       </PrimeDataTableInner>
@@ -69,6 +71,7 @@ const PrimeDataTableInner = ({
   rows,
   onRowSelected,
   keepExpanded,
+  refreshFn,
   rowGroup = "",
   usePaging = true,
 }) => {
@@ -121,10 +124,20 @@ const PrimeDataTableInner = ({
   const onRowGroupCollapse = (event) => {};
 
   const paginatorLeft = (
-    <Button type="button" icon="pi pi-refresh" className="p-button-text" />
+    <Button
+      type="button"
+      icon="pi pi-refresh"
+      className="p-button-text"
+      onClick={refreshFn}
+    />
   );
   const paginatorRight = (
-    <Button type="button" icon="pi pi-file-excel" onClick={exportExcel} className="p-button-success p-mr-2" />
+    <Button
+      type="button"
+      icon="pi pi-file-excel"
+      onClick={() => exportExcel()}
+      className="p-button-success p-mr-2"
+    />
   );
 
   const exportExcel = () => {
@@ -155,17 +168,14 @@ const PrimeDataTableInner = ({
   };
 
   const header = (
-    
-      <Button
-        type="button"
-        icon="pi pi-file-excel"
-        onClick={exportExcel}
-        className="p-button-success p-mr-2"
-        data-pr-tooltip="XLS"
-      />
-   
+    <Button
+      type="button"
+      icon="pi pi-file-excel"
+      onClick={exportExcel}
+      className="p-button-success p-mr-2"
+      data-pr-tooltip="XLS"
+    />
   );
-
 
   const paginatorProps = usePaging
     ? {
@@ -198,17 +208,17 @@ const PrimeDataTableInner = ({
 
   const setSelectedRowAndGraphData = (row) => {
     setSelectedRow(row);
-    onRowSelected(row);
+    //onRowSelected(row);
   };
 
   return (
     <StyledContainer>
       <div className="datatable-rowgroup-demo datatable-filter-demo datatable-scroll-demo">
-        <Card title={title} >
+        <Card title={title}>
           {children}
           <DataTable
             key={`${title}${rows.length}`}
-            header={header}
+            //header={header}
             className="p-datatable-sm"
             style={{
               width: "100%",
@@ -220,7 +230,6 @@ const PrimeDataTableInner = ({
             resizableColumns={true}
             columnResizeMode="expand"
             value={rows}
- 
             sortMode="single"
             sortField={rowGroup}
             sortOrder={1}
@@ -254,7 +263,7 @@ const PrimeDataTableInner = ({
                       rowGroup === "" ||
                       (rowGroup !== "" && rowGroup === c.field)
                     }
-                    filter={i === 0 && c.field !== "GridRowHeader"}
+                    filter={false}
                     filterPlaceholder={"Search"}
                     headerStyle={{ width: c.width }}
                     columnKey={c.field}

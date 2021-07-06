@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 ModuleRegistry.registerModules(AllModules);
 
-const StyledDownload = styled(Download)`
+const Download = styled(Download)`
   margin-left: auto;
   background-color: #2c7be5;
   border-radius: 2rem;
