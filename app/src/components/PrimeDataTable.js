@@ -107,6 +107,22 @@ const PrimeDataTableInner = ({
     return <StyledGridRowHeader>{rowData[columnName]}</StyledGridRowHeader>;
   };
 
+  const formatDiff = (rowData, columnName) => {
+    const StyledNegativeNumber = styled.div`
+      color: red;
+    `;
+
+    const diffValue = rowData[columnName].toString();
+
+    console.log({ diffValue });
+
+    return diffValue.includes("-") || diffValue.includes("(") ? (
+      <StyledNegativeNumber>{diffValue}</StyledNegativeNumber>
+    ) : (
+      <div>{diffValue}</div>
+    );
+  };
+
   const headerTemplate = (data) => {
     return (
       <React.Fragment>
@@ -251,6 +267,10 @@ const PrimeDataTableInner = ({
                       body: (rowData) =>
                         gridRowHeaderTemplate(rowData, c.field),
                       headerStyle: { width: 150 },
+                    }
+                  : c.field === "Diff"
+                  ? {
+                      body: (rowData) => formatDiff(rowData, c.field),
                     }
                   : {};
 
