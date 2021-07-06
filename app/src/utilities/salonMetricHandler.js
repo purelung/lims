@@ -111,8 +111,6 @@ export const pivotSalonMetricData = (data) => {
     const thisYear = parseFloat(gridRow["Period"]);
     const lastYear = parseFloat(gridRow["LLY Period"]);
 
-    console.log({ thisYear, lastYear });
-
     gridRow["Diff"] = formatValue(thisYear - lastYear, rowMetaData.diffFormat);
     gridRow["Diff %"] = `${relDiff(thisYear, lastYear).toFixed(1)}%`;
 

@@ -114,8 +114,6 @@ const PrimeDataTableInner = ({
 
     const diffValue = rowData[columnName].toString();
 
-    console.log({ diffValue });
-
     return diffValue.includes("-") || diffValue.includes("(") ? (
       <StyledNegativeNumber>{diffValue}</StyledNegativeNumber>
     ) : (

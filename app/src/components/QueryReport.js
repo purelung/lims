@@ -162,17 +162,19 @@ export const QueryReport = ({
     }
   );
 
-  const queryId = [queryPath, startDate, endDate];
+  console.log({ startDate, endDate });
+
+  const queryId = [queryPath, startDate.toDateString(), endDate.toDateString()];
   let options = {};
   if (useDateFilter) {
     options = { ...options, startDate, endDate };
   }
 
-  const { isLoading, isFetching, error, data } = useQuery(
-    queryId,
-    () => zeeFetch(user.authToken, queryPath, options),
-    { ...fetchOptions }
-  );
+  const { isLoading, isFetching, error, data } = useQuery({
+    queryKey: queryId,
+    queryFn: () => zeeFetch(user.authToken, queryPath, options),
+    ...fetchOptions,
+  });
 
   let manipulatedData = data;
   let combinedSelectedSalons = [];
@@ -201,8 +203,6 @@ export const QueryReport = ({
       const rowKeys = Object.keys(firstRow);
       salonFieldName = rowKeys.find((k) => possibleKeys.includes(k));
     }
-
-    console.log({ manipulatedData });
 
     manipulatedData = combinedSelectedSalons.find((s) => s.value === "all")
       ? manipulatedData

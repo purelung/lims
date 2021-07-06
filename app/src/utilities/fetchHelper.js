@@ -5,8 +5,6 @@ export const zeeFetch = async (authToken, queryPath, options = {}) => {
 
   const { startDate, endDate } = options;
 
-  console.log(options);
-
   if (options) {
     url = `${url}?`;
   }
@@ -35,4 +33,6 @@ export const zeeFetch = async (authToken, queryPath, options = {}) => {
 export const fetchOptions = {
   retry: false,
   staleTime: 1000 * 60 * (4 * 60),
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
 };
