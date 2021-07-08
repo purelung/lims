@@ -323,7 +323,6 @@ const PrimeDataTableInner = ({
                     columnKey={c.field}
                     {...rendererProps}
                     {...sortProps(rows, c.field)}
-                    sortFunction={moneyStringSort}
                   ></Column>
                 );
               })}
