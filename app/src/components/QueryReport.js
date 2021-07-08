@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  forwardRef,
+} from "react";
 import { Overlay, Spinner, showToast } from "./";
 import { UserContext } from "../contexts/UserContext";
 import { useQuery, useQueryClient } from "react-query";
@@ -20,22 +26,55 @@ import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 
-const StyledFilterRow = styled(Row)`
-  padding: 1rem;
-  margin-bottom: 1rem;
+const StyledButton = styled.button`
+  background-color: white;
+  border-radius: 5px;
 `;
 
-const StyledFilterCol = styled(Col)`
-  display: flex;
+const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
+  <StyledButton onClick={onClick} ref={ref}>
+    {value}
+  </StyledButton>
+));
+
+const FilterCol = (props) => {
+  return (
+    <Col md={4} sm={6} {...props} className="px-1 py-1">
+      {props.children}
+    </Col>
+  );
+};
+
+const StyledSelect = styled(Select)`
+  min-width: 175px;
+`;
+
+const BorderedDiv = styled.div`
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
   padding: 1rem;
 `;
 
-const StyledSelect = styled(Select)`
-  min-width: 400px;
-`;
+const FilterDiv = ({ children, title, style }) => {
+  return (
+    <BorderedDiv style={style}>
+      <h5>{title}</h5>
+      {children}
+    </BorderedDiv>
+  );
+};
+
+const DateCol = ({ children, title, style }) => {
+  return (
+    <Col md={6} sm={12} className="py-1">
+      <div>
+        <h5>{title}</h5>
+        {children}
+      </div>
+    </Col>
+  );
+};
 
 export const Report = ({
   children,
@@ -46,6 +85,7 @@ export const Report = ({
   rowGroup,
   keepExpanded,
   refreshFn,
+  sortColumns,
   usePaging = true,
 }) => {
   return (
@@ -65,6 +105,7 @@ export const Report = ({
         keepExpanded={keepExpanded}
         usePaging={usePaging}
         refreshFn={refreshFn}
+        sortColumns={sortColumns}
       >
         {children}
       </PrimeDataTable>
@@ -91,15 +132,6 @@ const getSelectedOptions = (e) => {
   return newSelectedOptions;
 };
 
-const FilterBox = ({ children, title, style }) => {
-  return (
-    <div style={style}>
-      <h5>{title}</h5>
-      {children}
-    </div>
-  );
-};
-
 export const QueryReport = ({
   children,
   title,
@@ -110,6 +142,7 @@ export const QueryReport = ({
   queryResultsTransform,
   useDateFilter = true,
   useSalonsFilter = true,
+  sortColumns = true,
 }) => {
   const { user } = useContext(UserContext);
   const queryClient = useQueryClient();
@@ -161,8 +194,6 @@ export const QueryReport = ({
       },
     }
   );
-
-  console.log({ startDate, endDate });
 
   const queryId = [queryPath, startDate.toDateString(), endDate.toDateString()];
   let options = {};
@@ -244,34 +275,38 @@ export const QueryReport = ({
             onRowSelected={onRowSelected}
             rowGroup={rowGroup}
             keepExpanded={keepExpanded}
+            sortColumns={sortColumns}
             refreshFn={() => queryClient.invalidateQueries(queryPath)}
           >
-            <StyledFilterRow>
+            <Row style={{ margin: "0px 0px 10px 0px" }}>
               {useDateFilter ? (
-                <StyledFilterCol style={{ display: "inline-flex" }}>
-                  <FilterBox title={"Start Date"}>
-                    <DatePicker
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      style={{ borderRadius: 10 }}
-                    />
-                  </FilterBox>
+                <FilterCol className="pr-1">
+                  <BorderedDiv>
+                    <Row>
+                      <DateCol title={"Start Date"}>
+                        <DatePicker
+                          selected={startDate}
+                          onChange={(date) => setStartDate(date)}
+                          customInput={<CustomDateInput />}
+                        />
+                      </DateCol>
 
-                  <FilterBox title={"End Date"} style={{ marginLeft: 30 }}>
-                    <DatePicker
-                      selected={endDate}
-                      onChange={(date) => setEndDate(date)}
-                    />
-                  </FilterBox>
-                </StyledFilterCol>
+                      <DateCol title={"End Date"}>
+                        <DatePicker
+                          selected={endDate}
+                          onChange={(date) => setEndDate(date)}
+                          customInput={<CustomDateInput />}
+                        />
+                      </DateCol>
+                    </Row>
+                  </BorderedDiv>
+                </FilterCol>
               ) : (
                 <div />
               )}
               {useSalonsFilter ? (
-                <StyledFilterCol
-                  style={{ marginLeft: "1rem", marginRight: "1rem" }}
-                >
-                  <FilterBox title={"Salons"}>
+                <FilterCol>
+                  <FilterDiv title={"Salons"}>
                     <StyledSelect
                       defaultValue={[allSelect]}
                       isMulti
@@ -292,14 +327,14 @@ export const QueryReport = ({
                       className="basic-multi-select"
                       classNamePrefix="select"
                     />
-                  </FilterBox>
-                </StyledFilterCol>
+                  </FilterDiv>
+                </FilterCol>
               ) : (
                 <div />
               )}
               {useSalonsFilter ? (
-                <StyledFilterCol>
-                  <FilterBox title={"Salon Groups"}>
+                <FilterCol>
+                  <FilterDiv title={"Salon Groups"}>
                     <StyledSelect
                       defaultValue={[allSelect]}
                       isMulti
@@ -320,12 +355,12 @@ export const QueryReport = ({
                       className="basic-multi-select"
                       classNamePrefix="select"
                     />
-                  </FilterBox>
-                </StyledFilterCol>
+                  </FilterDiv>
+                </FilterCol>
               ) : (
                 <div />
               )}
-            </StyledFilterRow>
+            </Row>
             {children}
           </Report>
         </Col>

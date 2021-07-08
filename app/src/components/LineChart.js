@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Badge, Card, CardBody, CardHeader, CardTitle } from "reactstrap";
 
-const LineChartInner = ({ theme }) => {
+export const LineChart = ({ dataSet1, dataSet2 }) => {
   const data = {
     labels: [
       "Jan",
@@ -22,24 +22,19 @@ const LineChartInner = ({ theme }) => {
     ],
     datasets: [
       {
-        label: "Sales ($)",
+        label: dataSet1.label,
         fill: true,
         backgroundColor: "transparent",
-        borderColor: theme.primary,
-        data: [
-          2015, 1465, 1487, 1796, 1387, 2123, 2866, 2548, 3902, 4938, 3917,
-          4927,
-        ],
+        borderColor: "#3A89FF",
+        data: dataSet1.data,
       },
       {
-        label: "Orders",
+        label: dataSet2.label,
         fill: true,
         backgroundColor: "transparent",
-        borderColor: theme.tertiary,
+        borderColor: "#076aff",
         borderDash: [4, 4],
-        data: [
-          928, 734, 626, 893, 921, 1202, 1396, 1232, 1524, 2102, 1506, 1887,
-        ],
+        data: dataSet2.data,
       },
     ],
   };
@@ -103,7 +98,3 @@ const LineChartInner = ({ theme }) => {
     </Card>
   );
 };
-
-export const LineChart = connect((store) => ({
-  theme: store.theme.currentTheme,
-}))(LineChartInner);

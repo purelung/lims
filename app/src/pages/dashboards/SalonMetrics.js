@@ -11,6 +11,7 @@ const SalonMetrics = () => {
       useDateFilter={true}
       useSalonsFilter={true}
       queryResultsTransform={pivotSalonMetricData}
+      sortColumns={false}
     />
   );
 };

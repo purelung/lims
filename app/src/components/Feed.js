@@ -22,7 +22,7 @@ export const Feed = ({ items }) => (
     </CardHeader>
     <CardBody>
       {items.map((item) => (
-        <div>
+        <div key={item.Title}>
           <Media>
             <Media body>
               {/* <small className="float-right text-navy">5m ago</small> */}

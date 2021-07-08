@@ -33,6 +33,7 @@ const PrimeDataTable = ({
   rows,
   onRowSelected,
   keepExpanded,
+  sortColumns,
   rowGroup = "",
   refreshFn,
   usePaging = true,
@@ -57,6 +58,7 @@ const PrimeDataTable = ({
         keepExpanded={keepExpanded}
         usePaging={usePaging}
         refreshFn={refreshFn}
+        sortColumns={sortColumns}
       >
         {children}
       </PrimeDataTableInner>
@@ -72,6 +74,7 @@ const PrimeDataTableInner = ({
   onRowSelected,
   keepExpanded,
   refreshFn,
+  sortColumns,
   rowGroup = "",
   usePaging = true,
 }) => {
@@ -205,6 +208,42 @@ const PrimeDataTableInner = ({
       }
     : {};
 
+  const moneyStringSort = (event) => {
+    const { field, order } = event;
+
+    const getNum = (o) => {
+      return Number(o[field].replace(/(^\$|,)/g, ""));
+    };
+
+    const compare = (oa, ob) => {
+      const a = getNum(oa);
+      const b = getNum(ob);
+
+      if (a > b) return 1 * order;
+      if (b > a) return -1 * order;
+
+      return 0;
+    };
+
+    return rows.sort(compare);
+  };
+
+  const sortProps = (rows, fieldName) => {
+    if (rows && rows.length > 0) {
+      const val = rows[0][fieldName];
+
+      if (typeof val === "string") {
+        if (val[0] === "$") {
+          return {
+            sortFunction: moneyStringSort,
+          };
+        }
+      }
+    }
+
+    return {};
+  };
+
   const groupProps =
     rowGroup !== ""
       ? {
@@ -277,15 +316,14 @@ const PrimeDataTableInner = ({
                     key={c.field}
                     field={c.field}
                     header={c.header}
-                    sortable={
-                      rowGroup === "" ||
-                      (rowGroup !== "" && rowGroup === c.field)
-                    }
+                    sortable={sortColumns}
                     filter={false}
                     filterPlaceholder={"Search"}
                     headerStyle={{ width: c.width }}
                     columnKey={c.field}
                     {...rendererProps}
+                    {...sortProps(rows, c.field)}
+                    sortFunction={moneyStringSort}
                   ></Column>
                 );
               })}
