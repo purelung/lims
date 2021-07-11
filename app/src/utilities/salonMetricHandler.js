@@ -28,18 +28,18 @@ export const pivotSalonMetricData = (data) => {
 
   const gridRowMetaData = [
     {
-      header: "Revenue Per Day",
+      header: "Revenue",
       columnSumSource: "Revenue",
       diffFormat: "dollars",
     },
     {
-      header: "Retail Per Day",
+      header: "Retail",
       columnSumSource: "Retail",
       diffFormat: "dollars",
     },
-    { header: "Guests Per Day", columnSumSource: "Guest" },
-    { header: "Cuts Per Day", columnSumSource: "Cut" },
-    { header: "Color Per Day", columnSumSource: "Color" },
+    { header: "Guests", columnSumSource: "Guest" },
+    { header: "Cuts", columnSumSource: "Cut" },
+    { header: "Color", columnSumSource: "Color" },
     {
       header: "Service & Product %",
       columnSumSource: "SAP",
@@ -47,7 +47,7 @@ export const pivotSalonMetricData = (data) => {
       diffFormat: "percentage",
     },
     {
-      header: "SPH",
+      header: "Services Per Hour",
       columnSumSource: "Service",
       columnDivisorSumSource: "Hours",
     },
