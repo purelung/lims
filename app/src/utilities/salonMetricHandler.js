@@ -10,16 +10,25 @@ const relDiff = (a, b) => {
   return (100 * (a - b)) / ((a + b) / 2);
 };
 
+const numberWithCommas = (x, decimalPlaces = 2) => {
+  return x
+    .toFixed(decimalPlaces)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
 const formatValue = (value, type) => {
   switch (type) {
     case "dollars":
       return value < 0
-        ? `($${Math.abs(value).toFixed(2)})`
-        : `$${value.toFixed(2)}`;
+        ? `($${numberWithCommas(Math.abs(value))})`
+        : `$${numberWithCommas(value)}`;
     case "percentage":
       return `${(value * 100).toFixed(1)}%`;
     default:
-      return value % 1 === 0 ? value : value.toFixed(1);
+      return value % 1 === 0
+        ? numberWithCommas(value, 0)
+        : numberWithCommas(value, 1);
   }
 };
 
@@ -113,6 +122,13 @@ export const pivotSalonMetricData = (data) => {
 
     gridRow["Diff"] = formatValue(thisYear - lastYear, rowMetaData.diffFormat);
     gridRow["Diff %"] = `${relDiff(thisYear, lastYear).toFixed(1)}%`;
+
+    gridColumnMetaData.forEach((columnMetaData) => {
+      gridRow[columnMetaData.header] = formatValue(
+        parseFloat(columnMetaData.algorithm(rowMetaData)),
+        rowMetaData.diffFormat
+      );
+    });
 
     return gridRow;
   });
