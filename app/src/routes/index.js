@@ -28,7 +28,9 @@ const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
 const EmployeeRankings = async(() =>
   import("../pages/reports/EmployeeRankings")
 );
-const Schedules = async(() => import("../pages/reports/Schedules"));
+const BusinessPerformance = async(() => import("../pages/reports/BusinessPerformance"));
+
+
 
 // Store Admin
 const Users = async(() => import("../pages/store-admin/users"));
@@ -108,14 +110,19 @@ const reportRoutes = {
 
   children: [
     {
-      path: "/reports/salon-rankings",
-      name: "Salon Rankings",
-      component: SalonRankings,
+      path: "/reports/business-performance",
+      name: "Business Performance",
+      component: BusinessPerformance,
     },
     {
       path: "/reports/employee-rankings",
       name: "Employee Rankings",
       component: EmployeeRankings,
+    },
+    {
+      path: "/reports/salon-rankings",
+      name: "Salon Rankings",
+      component: SalonRankings,
     },
   ],
 };
