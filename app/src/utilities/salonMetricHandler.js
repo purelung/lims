@@ -7,7 +7,7 @@ Array.prototype.sum = function (prop) {
 };
 
 const relDiff = (a, b) => {
-  return (100 * (a - b)) / ((a + b) / 2);
+  return (100 * (a - b) / b);
 };
 
 const numberWithCommas = (x, decimalPlaces = 2) => {
@@ -59,6 +59,7 @@ export const pivotSalonMetricData = (data) => {
       header: "Services Per Hour",
       columnSumSource: "Service",
       columnDivisorSumSource: "Hours",
+      diffFormat: "dollars",
     },
     {
       header: "Guests Per Hour",
