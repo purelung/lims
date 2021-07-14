@@ -1,4 +1,4 @@
-const mode = "staging";
+const mode = "test";
 
 export const apiBaseUrl = () => {
   return mode === "test"

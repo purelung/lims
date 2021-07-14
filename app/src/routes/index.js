@@ -29,7 +29,7 @@ const EmployeeRankings = async(() =>
   import("../pages/reports/EmployeeRankings")
 );
 const BusinessPerformance = async(() => import("../pages/reports/BusinessPerformance"));
-
+const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
 
 
 // Store Admin
@@ -123,6 +123,11 @@ const reportRoutes = {
       path: "/reports/salon-rankings",
       name: "Salon Rankings",
       component: SalonRankings,
+    },
+    {
+      path: "/reports/schedule-audit",
+      name: "Schedule Audit",
+      component: ScheduleAudit,
     },
   ],
 };
