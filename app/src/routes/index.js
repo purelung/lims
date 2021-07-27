@@ -65,7 +65,7 @@ const dashboardRoutes = (user) => {
       {
         path: "/dashboard/salon-schedules",
         name: "Salon Schedules",
-        hidden: user.userRoleId > 2,
+        authorized: user.userRoleId > 2,
         component: SalonSchedules,
       },
     ],
@@ -141,7 +141,7 @@ const storeAdminRoutes = (user) => {
   return {
     path: "/store-admin",
     name: "Store Admin",
-    hidden: user.userRoleId > 3,
+    authorized: user.userRoleId > 3,
     icon: UsersIcon,
     children: [
       {
@@ -165,6 +165,17 @@ const storeAdminRoutes = (user) => {
 
 // Dashboard specific routes (these get rendered on sidebar except for dashboard)
 export const getSidebarRoutes = (user) => {
+  return getAuthorizedRoutes(user)
+    .filter((cat) => !cat.hidden)
+    .map((cat) => {
+      return {
+        ...cat,
+        children: cat.children.filter((subCat) => !subCat.hidden),
+      };
+    });
+};
+
+export const getAuthorizedRoutes = (user) => {
   const temp = [
     dashboardRoutes(user),
     reportRoutes(user),
@@ -172,11 +183,11 @@ export const getSidebarRoutes = (user) => {
   ];
 
   return temp
-    .filter((cat) => !cat.hidden)
+    .filter((cat) => !cat.authorized)
     .map((cat) => {
       return {
         ...cat,
-        children: cat.children.filter((subCat) => !subCat.hidden),
+        children: cat.children.filter((subCat) => !subCat.authorized),
       };
     });
 };

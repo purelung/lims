@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { getSidebarRoutes, getAuthRoutes } from "./index";
+import { getAuthorizedRoutes, getAuthRoutes } from "./index";
 import { UserContext } from "../contexts/UserContext";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -62,7 +62,7 @@ const Routes = () => {
 
           {childRoutes(
             DashboardLayout,
-            authenticated ? getSidebarRoutes(user) : []
+            authenticated ? getAuthorizedRoutes(user) : []
           )}
 
           {childRoutes(AuthLayout, getAuthRoutes())}
