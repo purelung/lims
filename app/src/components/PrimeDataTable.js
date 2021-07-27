@@ -8,6 +8,8 @@ import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { ExportToCsv } from "export-to-csv";
 import { Sparklines, SparklinesLine } from "react-sparklines";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -115,12 +117,16 @@ const PrimeDataTableInner = ({
       color: red;
     `;
 
+    const StyledPositiveNumber = styled.div`
+      color: darkgreen;
+    `;
+
     const diffValue = rowData[columnName].toString();
 
     return diffValue.includes("-") || diffValue.includes("(") ? (
       <StyledNegativeNumber>{diffValue}</StyledNegativeNumber>
     ) : (
-      <div>{diffValue}</div>
+      <StyledPositiveNumber>{diffValue}</StyledPositiveNumber>
     );
   };
 
@@ -149,13 +155,30 @@ const PrimeDataTableInner = ({
     />
   );
   const paginatorRight = (
-    <Button
-      type="button"
-      icon="pi pi-file-excel"
-      onClick={() => exportExcel()}
-      className="p-button-success p-mr-2"
-    />
+    <div>
+      <Button
+        type="button"
+        icon="pi pi-file-excel"
+        onClick={() => exportExcel()}
+        className="p-button-success p-mr-2"
+      />
+      <Button
+        type="button"
+        icon="pi pi-file-pdf"
+        onClick={() => exportPdf()}
+        className="p-button-warning p-mr-2"
+        data-pr-tooltip="PDF"
+      />
+    </div>
   );
+
+  const exportPdf = () => {
+    const doc = new jsPDF({
+      orientation: "landscape",
+    });
+    doc.autoTable(exportColumns, rows);
+    doc.save(title + ".pdf");
+  };
 
   const exportExcel = () => {
     import("xlsx").then((xlsx) => {
@@ -228,6 +251,26 @@ const PrimeDataTableInner = ({
     return rows.sort(compare);
   };
 
+  const percentageSort = (event) => {
+    const { field, order } = event;
+
+    const getNum = (o) => {
+      return Number(o[field].replace("%", ""));
+    };
+
+    const compare = (oa, ob) => {
+      const a = getNum(oa);
+      const b = getNum(ob);
+
+      if (a > b) return 1 * order;
+      if (b > a) return -1 * order;
+
+      return 0;
+    };
+
+    return rows.sort(compare);
+  };
+
   const sortProps = (rows, fieldName) => {
     if (rows && rows.length > 0) {
       const val = rows[0][fieldName];
@@ -236,6 +279,10 @@ const PrimeDataTableInner = ({
         if (val[0] === "$") {
           return {
             sortFunction: moneyStringSort,
+          };
+        } else if (val.slice(-1) === "%") {
+          return {
+            sortFunction: percentageSort,
           };
         }
       }
@@ -276,6 +323,9 @@ const PrimeDataTableInner = ({
             style={{
               width: "100%",
             }}
+            // {...(sortColumns
+            //   ? { frozenWidth: `${columns[0].width.toString()}px` }
+            //   : undefined)}
             selectionMode="single"
             selection={selectedRow}
             onSelectionChange={(e) => setSelectedRowAndGraphData(e.value)}
@@ -286,6 +336,7 @@ const PrimeDataTableInner = ({
             sortMode="single"
             sortField={rowGroup}
             sortOrder={1}
+            frozenColumns={1}
             {...groupProps}
             {...paginatorProps}
           >
@@ -313,6 +364,8 @@ const PrimeDataTableInner = ({
 
                 return (
                   <Column
+                    //frozen={i === 0 && sortColumns}
+                    headerClassName="header-column"
                     key={c.field}
                     field={c.field}
                     header={c.header}
@@ -338,6 +391,10 @@ export default PrimeDataTable;
 const StyledContainer = styled.div`
   .p-column-filter {
     width: 100%;
+  }
+
+  .p-sortable-column-icon {
+    display: flex;
   }
 
   .datatable-rowgroup-demo .p-rowgroup-footer td {

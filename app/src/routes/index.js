@@ -28,44 +28,48 @@ const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
 const EmployeeRankings = async(() =>
   import("../pages/reports/EmployeeRankings")
 );
-const BusinessPerformance = async(() => import("../pages/reports/BusinessPerformance"));
+const BusinessPerformance = async(() =>
+  import("../pages/reports/BusinessPerformance")
+);
 const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
-
 
 // Store Admin
 const Users = async(() => import("../pages/store-admin/users"));
 const AddUser = async(() => import("../pages/store-admin/add-user"));
 
-const dashboardRoutes = {
-  path: "/dashboard",
-  name: "Dashboards",
-  header: "Pages",
-  icon: SlidersIcon,
-  containsHome: true,
-  children: [
-    {
-      path: "/dashboard/default",
-      name: "Home",
-      hidden: true,
-      component: Landing,
-    },
+const dashboardRoutes = (user) => {
+  return {
+    path: "/dashboard",
+    name: "Dashboards",
+    header: "Pages",
+    icon: SlidersIcon,
+    containsHome: true,
+    children: [
+      {
+        path: "/dashboard/default",
+        name: "Home",
+        hidden: true,
+        component: Landing,
+      },
 
-    {
-      path: "/dashboard/salon-metrics",
-      name: "Salon Metrics",
-      component: SalonMetrics,
-    },
-    {
-      path: "/dashboard/employee-metrics",
-      name: "Employee Metrics",
-      component: EmployeeMetrics,
-    },
-    {
-      path: "/dashboard/salon-schedules",
-      name: "Salon Schedules",
-      component: SalonSchedules,
-    },
-  ],
+      {
+        path: "/dashboard/salon-metrics",
+        name: "Salon Metrics",
+        component: SalonMetrics,
+      },
+      {
+        path: "/dashboard/employee-metrics",
+        name: "Employee Metrics",
+        component: EmployeeMetrics,
+      },
+      {
+        path: "/dashboard/salon-schedules",
+        name: "Salon Schedules",
+        hidden: user.userRoleId > 2,
+        component: SalonSchedules,
+      },
+    ],
+  };
 };
 
 const authRoutes = {
@@ -103,60 +107,81 @@ const authRoutes = {
   ],
 };
 
-const reportRoutes = {
-  path: "/reports",
-  name: "Reports",
-  icon: PieChartIcon,
-
-  children: [
-    {
-      path: "/reports/business-performance",
-      name: "Business Performance",
-      component: BusinessPerformance,
-    },
-    {
-      path: "/reports/employee-rankings",
-      name: "Employee Rankings",
-      component: EmployeeRankings,
-    },
-    {
-      path: "/reports/salon-rankings",
-      name: "Salon Rankings",
-      component: SalonRankings,
-    },
-    {
-      path: "/reports/schedule-audit",
-      name: "Schedule Audit",
-      component: ScheduleAudit,
-    },
-  ],
+const reportRoutes = (user) => {
+  return {
+    path: "/reports",
+    name: "Reports",
+    icon: PieChartIcon,
+    children: [
+      {
+        path: "/reports/business-performance",
+        name: "Business Performance",
+        component: BusinessPerformance,
+      },
+      {
+        path: "/reports/employee-rankings",
+        name: "Employee Rankings",
+        component: EmployeeRankings,
+      },
+      {
+        path: "/reports/salon-rankings",
+        name: "Salon Rankings",
+        component: SalonRankings,
+      },
+      {
+        path: "/reports/schedule-audit",
+        name: "Schedule Audit",
+        component: ScheduleAudit,
+      },
+    ],
+  };
 };
 
-const storeAdminRoutes = {
-  path: "/store-admin",
-  name: "Store Admin",
-  icon: UsersIcon,
-  children: [
-    {
-      path: "/store-admin/users",
-      name: "Manage Users",
-      component: Users,
-    },
-    {
-      path: "/store-admin/add-user",
-      name: "Add User",
-      component: AddUser,
-    },
-    {
-      path: "/store-admin/edit-user",
-      name: "Edit User",
-      component: AddUser,
-    },
-  ],
+const storeAdminRoutes = (user) => {
+  return {
+    path: "/store-admin",
+    name: "Store Admin",
+    hidden: user.userRoleId > 3,
+    icon: UsersIcon,
+    children: [
+      {
+        path: "/store-admin/users",
+        name: "Manage Users",
+        component: Users,
+      },
+      {
+        path: "/store-admin/add-user",
+        name: "Add User",
+        component: AddUser,
+      },
+      {
+        path: "/store-admin/edit-user",
+        name: "Edit User",
+        component: AddUser,
+      },
+    ],
+  };
 };
 
 // Dashboard specific routes (these get rendered on sidebar except for dashboard)
-export const dashboard = [dashboardRoutes, reportRoutes, storeAdminRoutes];
+export const getSidebarRoutes = (user) => {
+  const temp = [
+    dashboardRoutes(user),
+    reportRoutes(user),
+    storeAdminRoutes(user),
+  ];
+
+  return temp
+    .filter((cat) => !cat.hidden)
+    .map((cat) => {
+      return {
+        ...cat,
+        children: cat.children.filter((subCat) => !subCat.hidden),
+      };
+    });
+};
 
 // Auth specific routes for route guard redirect
-export const auth = [authRoutes];
+export const getAuthRoutes = () => {
+  return [authRoutes];
+};

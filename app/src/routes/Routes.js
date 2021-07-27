@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import { dashboard as dashboardRoutes, auth as authRoutes } from "./index";
+import { getSidebarRoutes, getAuthRoutes } from "./index";
 import { UserContext } from "../contexts/UserContext";
 
 import DashboardLayout from "../layouts/Dashboard";
@@ -60,9 +60,12 @@ const Routes = () => {
 
           {/* {childRoutes(LandingLayout, landingRoutes)} */}
 
-          {childRoutes(DashboardLayout, authenticated ? dashboardRoutes.filter(route => !(route.path.includes('store-admin') && user.userRoleId > 3)) : [])}
+          {childRoutes(
+            DashboardLayout,
+            authenticated ? getSidebarRoutes(user) : []
+          )}
 
-          {childRoutes(AuthLayout, authRoutes)}
+          {childRoutes(AuthLayout, getAuthRoutes())}
 
           <Route
             render={() => (

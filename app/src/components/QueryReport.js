@@ -21,10 +21,13 @@ import {
 } from "reactstrap";
 import PrimeDataTable from "./PrimeDataTable";
 import { zeeFetch, fetchOptions } from "../utilities/fetchHelper";
+import { sortByName } from "../utilities/sortHelper";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
+import { Dialog } from "primereact/dialog";
+import { Button as PrimeButton } from "primereact/button";
 
 const StyledButton = styled.button`
   background-color: white;
@@ -56,12 +59,43 @@ const BorderedDiv = styled.div`
   padding: 1rem;
 `;
 
-const FilterDiv = ({ children, title, style }) => {
+const StyledLink = styled.span`
+  color: lightblue;
+  cursor: pointer;
+  :hover {
+    color: blue;
+  }
+  :active {
+    color: lightblue;
+  }
+`;
+
+const FilterDiv = ({ children, title, style, link }) => {
   return (
     <BorderedDiv style={style}>
-      <h5>{title}</h5>
+      <h5>
+        {title}
+        {link ? (
+          <StyledLink onClick={link.action}>{" " + link.text}</StyledLink>
+        ) : (
+          <span />
+        )}
+      </h5>
       {children}
     </BorderedDiv>
+  );
+};
+
+const dialogFooter = (hideFn) => {
+  return (
+    <div>
+      <PrimeButton
+        label="Close"
+        icon="pi pi-check"
+        onClick={() => hideFn()}
+        autoFocus
+      />
+    </div>
   );
 };
 
@@ -129,6 +163,10 @@ const getSelectedOptions = (e) => {
     newSelectedOptions = newSelectedOptions.filter((g) => g.value !== "all");
   }
 
+  newSelectedOptions = newSelectedOptions.sort((a, b) =>
+    sortByName(a.value, b.value)
+  );
+
   return newSelectedOptions;
 };
 
@@ -159,6 +197,7 @@ export const QueryReport = ({
   const [selectedGroups, setSelectedGroups] = useState([allSelect]);
   const [groupOptions, setGroupOptions] = useState([allSelect]);
   const [salonGroups, setSalonGroups] = useState([]);
+  const [displaySelectedSalons, setDisplaySelectedSalons] = useState(false);
 
   const salonsQueryPath = "salonsWithGroups";
   const salonQueryResult = useQuery(
@@ -215,7 +254,6 @@ export const QueryReport = ({
       ? salonOptions
       : selectedGroups
           .flatMap((g) => {
-            console.log(g.value);
             return salonGroups.find((sg) => sg.group === g.value)?.salons;
           })
           .map((g) => ({ value: g, label: g }));
@@ -306,7 +344,13 @@ export const QueryReport = ({
               )}
               {useSalonsFilter ? (
                 <FilterCol>
-                  <FilterDiv title={"Salons"}>
+                  <FilterDiv
+                    title={"Salons"}
+                    link={{
+                      text: "(Show selected...)",
+                      action: () => setDisplaySelectedSalons(true),
+                    }}
+                  >
                     <StyledSelect
                       defaultValue={[allSelect]}
                       isMulti
@@ -365,6 +409,22 @@ export const QueryReport = ({
           </Report>
         </Col>
       </Row>
+      <Dialog
+        header="Selected Salons"
+        visible={displaySelectedSalons}
+        style={{ width: "50vw" }}
+        footer={dialogFooter(() => setDisplaySelectedSalons(false))}
+        onHide={() => setDisplaySelectedSalons(false)}
+      >
+        <p>
+          {combinedSelectedSalons
+            .map((s) => s.value)
+            .filter((s) => s !== "all")
+            .map((s) => (
+              <div>{s}</div>
+            ))}
+        </p>
+      </Dialog>
     </Container>
   );
 };
