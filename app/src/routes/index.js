@@ -60,6 +60,7 @@ const dashboardRoutes = (user) => {
       {
         path: "/dashboard/employee-metrics",
         name: "Employee Metrics",
+        authorized: user.userRoleId > 2,
         component: EmployeeMetrics,
       },
       {
