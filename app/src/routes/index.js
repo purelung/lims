@@ -60,13 +60,13 @@ const dashboardRoutes = (user) => {
       {
         path: "/dashboard/employee-metrics",
         name: "Employee Metrics",
-        authorized: user.userRoleId > 2,
+        authorized: user.userRoleId > 3,
         component: EmployeeMetrics,
       },
       {
         path: "/dashboard/salon-schedules",
         name: "Salon Schedules",
-        authorized: user.userRoleId > 2,
+        authorized: user.userRoleId > 3,
         component: SalonSchedules,
       },
     ],
