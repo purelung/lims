@@ -10,11 +10,13 @@ export const zeeFetch = async (authToken, queryPath, options = {}) => {
   }
 
   if (startDate) {
-    url = `${url}startDate=${startDate.toISOString().split("T")[0]}&`;
+    url = `${url}startDate=${startDate.toLocaleDateString('en-US')}&`;
   }
 
+  
+
   if (endDate) {
-    url = `${url}endDate=${endDate.toISOString().split("T")[0]}&`;
+    url = `${url}endDate=${endDate.toLocaleDateString('en-US')}&`;
   }
 
   const response = await fetch(url, {

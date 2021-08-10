@@ -16,6 +16,7 @@ import Page500 from "../pages/auth/Page500";
 // Dashboards
 const Landing = async(() => import("../pages/dashboards/Landing"));
 const SalonMetrics = async(() => import("../pages/dashboards/SalonMetrics"));
+const MetricsDetail = async(() => import("../pages/dashboards/MetricsDetail"));
 const EmployeeMetrics = async(() =>
   import("../pages/dashboards/EmployeeMetrics")
 );
@@ -56,6 +57,12 @@ const dashboardRoutes = (user) => {
         path: "/dashboard/salon-metrics",
         name: "Salon Metrics",
         component: SalonMetrics,
+      },
+      {
+        path: "/dashboard/metrics-detail",
+        name: "Metrics Detail",
+        authorized: user.userRoleId > 3,
+        component: MetricsDetail,
       },
       {
         path: "/dashboard/employee-metrics",
