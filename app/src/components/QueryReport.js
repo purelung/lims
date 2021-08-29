@@ -186,10 +186,12 @@ export const QueryReport = ({
   const queryClient = useQueryClient();
 
   var today = new Date();
+  var yesterday = new Date();
+  yesterday.setDate(today.getDate() - 1);
   var oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
   const [startDate, setStartDate] = useState(oneWeekAgo);
-  const [endDate, setEndDate] = useState(today);
+  const [endDate, setEndDate] = useState(yesterday);
 
   const allSelect = { value: "all", label: "all" };
   const [selectedSalons, setSelectedSalons] = useState([allSelect]);
