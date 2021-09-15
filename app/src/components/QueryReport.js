@@ -212,9 +212,12 @@ export const QueryReport = ({
         const groups = data.salonGroups.map((s) => s.group).filter(unique);
 
         if (salonGroups.length === 0) {
+          console.log({ salons });
           setSalonOptions([
-            allSelect,
-            ...salons.map((s) => ({ label: s, value: s })),
+            ...salons
+              .filter(unique)
+              .map((s) => ({ label: s, value: s }))
+              .sort((a, b) => sortByName(a.value, b.value)),
           ]);
           setGroupOptions([
             allSelect,
@@ -360,6 +363,7 @@ export const QueryReport = ({
                       name="salons"
                       onChange={(e) => {
                         const newSelectedSalons = getSelectedOptions(e);
+
                         setSelectedSalons(newSelectedSalons);
 
                         if (!newSelectedSalons.find((s) => s.value === "all")) {
@@ -423,7 +427,7 @@ export const QueryReport = ({
             .map((s) => s.value)
             .filter((s) => s !== "all")
             .map((s) => (
-              <div>{s}</div>
+              <div key={s}>{s}</div>
             ))}
         </p>
       </Dialog>

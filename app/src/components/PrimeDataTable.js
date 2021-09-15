@@ -323,9 +323,9 @@ const PrimeDataTableInner = ({
             style={{
               width: "100%",
             }}
-            // {...(sortColumns
-            //   ? { frozenWidth: `${columns[0].width.toString()}px` }
-            //   : undefined)}
+            {...(sortColumns
+              ? { frozenWidth: `${columns[0].width.toString()}px` }
+              : undefined)}
             selectionMode="single"
             selection={selectedRow}
             onSelectionChange={(e) => setSelectedRowAndGraphData(e.value)}
@@ -364,7 +364,7 @@ const PrimeDataTableInner = ({
 
                 return (
                   <Column
-                    //frozen={i === 0 && sortColumns}
+                    frozen={i === 0 && sortColumns}
                     headerClassName="header-column"
                     key={c.field}
                     field={c.field}
