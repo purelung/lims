@@ -21,18 +21,45 @@ import {
 } from "reactstrap";
 import PrimeDataTable from "./PrimeDataTable";
 import { zeeFetch, fetchOptions } from "../utilities/fetchHelper";
-import { sortByName } from "../utilities/sortHelper";
+import { sortByName } from "../utilities/listHelper";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
 import { Dialog } from "primereact/dialog";
 import { Button as PrimeButton } from "primereact/button";
+import { unique } from "../utilities/listHelper";
+import { jsPDF } from "jspdf";
+import "jspdf-autotable";
 
 const StyledButton = styled.button`
   background-color: white;
   border-radius: 5px;
 `;
+
+const addHeaders = (doc, header) => {
+  const pageCount = doc.internal.getNumberOfPages();
+
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(8);
+  for (var i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.text(header, doc.internal.pageSize.width / 2, 10, {
+      align: "center",
+    });
+  }
+};
+
+const exportPdf = (title, exportColumns, rows, header) => {
+  const doc = new jsPDF({
+    orientation: "landscape",
+  });
+  //doc.text(header, 10, 10);
+
+  doc.autoTable(exportColumns, rows);
+  addHeaders(doc, header);
+  doc.save(title + ".pdf");
+};
 
 const CustomDateInput = forwardRef(({ value, onClick }, ref) => (
   <StyledButton onClick={onClick} ref={ref}>
@@ -120,6 +147,7 @@ export const Report = ({
   keepExpanded,
   refreshFn,
   sortColumns,
+  exportPdfFn,
   usePaging = true,
 }) => {
   return (
@@ -139,16 +167,13 @@ export const Report = ({
         keepExpanded={keepExpanded}
         usePaging={usePaging}
         refreshFn={refreshFn}
+        exportPdfFn={exportPdfFn}
         sortColumns={sortColumns}
       >
         {children}
       </PrimeDataTable>
     </div>
   );
-};
-
-const unique = (value, index, self) => {
-  return self.indexOf(value) === index;
 };
 
 const getSelectedOptions = (e) => {
@@ -178,6 +203,7 @@ export const QueryReport = ({
   rowGroup,
   keepExpanded,
   queryResultsTransform,
+  childPropsFunction,
   useDateFilter = true,
   useSalonsFilter = true,
   sortColumns = true,
@@ -212,7 +238,6 @@ export const QueryReport = ({
         const groups = data.salonGroups.map((s) => s.group).filter(unique);
 
         if (salonGroups.length === 0) {
-          console.log({ salons });
           setSalonOptions([
             ...salons
               .filter(unique)
@@ -251,7 +276,7 @@ export const QueryReport = ({
     ...fetchOptions,
   });
 
-  let manipulatedData = data;
+  let manipulatedData = data ? JSON.parse(JSON.stringify(data)) : data;
   let combinedSelectedSalons = [];
 
   if (useSalonsFilter) {
@@ -319,6 +344,14 @@ export const QueryReport = ({
             rowGroup={rowGroup}
             keepExpanded={keepExpanded}
             sortColumns={sortColumns}
+            exportPdfFn={(title, exportColumns, rows) =>
+              exportPdf(
+                title,
+                exportColumns,
+                rows,
+                startDate.toDateString() + " - " + endDate.toDateString()
+              )
+            }
             refreshFn={() => queryClient.invalidateQueries(queryPath)}
           >
             <Row style={{ margin: "0px 0px 10px 0px" }}>
@@ -411,7 +444,12 @@ export const QueryReport = ({
                 <div />
               )}
             </Row>
-            {children}
+            {children
+              ? React.cloneElement(
+                  children,
+                  data ? childPropsFunction(data) : undefined
+                )
+              : undefined}
           </Report>
         </Col>
       </Row>

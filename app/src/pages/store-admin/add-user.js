@@ -74,7 +74,6 @@ const BasicForm = ({ edit, editingUserId }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setUserToEdit(data);
         setRole(roles.find((r) => r.value === data.user.userRoleId));
         setSalons({
@@ -242,8 +241,9 @@ const StyledHeader = styled.div`
 const AddUser = () => {
   const location = useLocation();
   const edit = location.pathname.includes("edit-user");
-  const editingUserId = qs.parse(location.search, { ignoreQueryPrefix: true })
-    .userId;
+  const editingUserId = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  }).userId;
   let history = useHistory();
 
   return (

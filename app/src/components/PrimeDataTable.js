@@ -8,8 +8,6 @@ import { Button } from "primereact/button";
 import { MultiSelect } from "primereact/multiselect";
 import { ExportToCsv } from "export-to-csv";
 import { Sparklines, SparklinesLine } from "react-sparklines";
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
 
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -38,6 +36,7 @@ const PrimeDataTable = ({
   sortColumns,
   rowGroup = "",
   refreshFn,
+  exportPdfFn,
   usePaging = true,
 }) => {
   if (rows === undefined) {
@@ -61,6 +60,7 @@ const PrimeDataTable = ({
         usePaging={usePaging}
         refreshFn={refreshFn}
         sortColumns={sortColumns}
+        exportPdfFn={exportPdfFn}
       >
         {children}
       </PrimeDataTableInner>
@@ -77,6 +77,7 @@ const PrimeDataTableInner = ({
   keepExpanded,
   refreshFn,
   sortColumns,
+  exportPdfFn,
   rowGroup = "",
   usePaging = true,
 }) => {
@@ -165,20 +166,12 @@ const PrimeDataTableInner = ({
       <Button
         type="button"
         icon="pi pi-file-pdf"
-        onClick={() => exportPdf()}
+        onClick={() => exportPdfFn(title, exportColumns, rows)}
         className="p-button-warning p-mr-2"
         data-pr-tooltip="PDF"
       />
     </div>
   );
-
-  const exportPdf = () => {
-    const doc = new jsPDF({
-      orientation: "landscape",
-    });
-    doc.autoTable(exportColumns, rows);
-    doc.save(title + ".pdf");
-  };
 
   const exportExcel = () => {
     import("xlsx").then((xlsx) => {
@@ -389,6 +382,14 @@ const PrimeDataTableInner = ({
 export default PrimeDataTable;
 
 const StyledContainer = styled.div`
+  .ui-datatable-frozenlayout-left td {
+    height: 24px;
+  }
+
+  .ui-datatable-frozenlayout-right td {
+    height: 24px;
+  }
+
   .p-column-filter {
     width: 100%;
   }

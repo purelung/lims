@@ -11,3 +11,7 @@ export const sortByName = (a, b) => {
   // names must be equal
   return 0;
 };
+
+export const unique = (value, index, self) => {
+  return self.indexOf(value) === index;
+};

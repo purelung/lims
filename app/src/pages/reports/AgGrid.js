@@ -44,7 +44,6 @@ const AgGrid = ({ title, rows, rowGroup = "" }) => {
       allColumnIds.push(column.colId);
     });
     columnApi.autoSizeColumns(allColumnIds, skipHeader);
-    console.log(allColumnIds);
   };
 
   const onGridReady = (params) => {
