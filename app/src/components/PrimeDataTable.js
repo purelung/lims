@@ -316,7 +316,7 @@ const PrimeDataTableInner = ({
             style={{
               width: "100%",
             }}
-            {...(sortColumns
+            {...(sortColumns && columns?.length > 0
               ? { frozenWidth: `${columns[0].width.toString()}px` }
               : undefined)}
             selectionMode="single"
