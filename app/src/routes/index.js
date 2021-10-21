@@ -33,6 +33,7 @@ const BusinessPerformance = async(() =>
   import("../pages/reports/BusinessPerformance")
 );
 const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
+const AVGGuests = async(() => import("../pages/reports/AVGGuests"));
 
 // Store Admin
 const Users = async(() => import("../pages/store-admin/users"));
@@ -121,6 +122,11 @@ const reportRoutes = (user) => {
     name: "Reports",
     icon: PieChartIcon,
     children: [
+      {
+        path: "/reports/avg-guests",
+        name: "Average Guests",
+        component: AVGGuests,
+      },
       {
         path: "/reports/business-performance",
         name: "Business Performance",
