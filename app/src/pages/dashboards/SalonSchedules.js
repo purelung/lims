@@ -29,7 +29,7 @@ const WeekDiv = styled.div`
 const ScheduleTabs = ({ weeks, setWeek, activeWeek }) => {
   const orderedWeeks = weeks
     .map((w) => ({ text: w, date: Date.parse(w.replace("Week Ending ", "")) }))
-    .sort((a, b) => b.date - a.date);
+    .sort((a, b) => a.date - b.date);
 
   const setDefaultWeek = () => {
     setWeek(orderedWeeks[0].text);
@@ -38,8 +38,6 @@ const ScheduleTabs = ({ weeks, setWeek, activeWeek }) => {
   useEffect(() => {
     setDefaultWeek();
   }, []);
-
-  console.log({ activeWeek });
 
   return (
     <Row style={{ padding: 13, marginBottom: 10 }}>
@@ -82,6 +80,7 @@ const SalonSchedules = () => {
       childPropsFunction={childPropsFunction}
       queryResultsTransform={(data) => queryResultsTransform(data, activeWeek)}
       keepExpanded={true}
+      useDateFilter={false}
     >
       <ScheduleTabs setWeek={setWeek} activeWeek={activeWeek} />
     </QueryReport>
