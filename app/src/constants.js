@@ -1,7 +1,7 @@
-const mode = "stage";
+const mode = "test";
 
 export const apiBaseUrl = () => {
-  return mode === "test"
+  return mode === "staging"
     ? "http://localhost:7071"
     : "https://zeereportingapi.azurewebsites.net";
 };
