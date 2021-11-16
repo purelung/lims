@@ -74,7 +74,6 @@ const dashboardRoutes = (user) => {
       {
         path: "/dashboard/salon-schedules",
         name: "Salon Schedules",
-        authorized: user.userRoleId > 3,
         component: SalonSchedules,
       },
     ],

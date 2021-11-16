@@ -37,7 +37,7 @@ const PrimeDataTable = ({
   rowGroup = "",
   refreshFn,
   exportPdfFn,
-  usePaging = true,
+  usePaging = false,
 }) => {
   if (rows === undefined) {
     return <div />;
@@ -157,19 +157,7 @@ const PrimeDataTableInner = ({
   );
   const paginatorRight = (
     <div>
-      <Button
-        type="button"
-        icon="pi pi-file-excel"
-        onClick={() => exportExcel()}
-        className="p-button-success p-mr-2"
-      />
-      <Button
-        type="button"
-        icon="pi pi-file-pdf"
-        onClick={() => exportPdfFn(title, exportColumns, rows)}
-        className="p-button-warning p-mr-2"
-        data-pr-tooltip="PDF"
-      />
+
     </div>
   );
 
@@ -200,14 +188,24 @@ const PrimeDataTableInner = ({
     });
   };
 
-  const header = (
+
+  const exportheader = (
+    
+    <div>
     <Button
-      type="button"
-      icon="pi pi-file-excel"
-      onClick={exportExcel}
-      className="p-button-success p-mr-2"
-      data-pr-tooltip="XLS"
-    />
+    type="button"
+    icon="pi pi-file-excel"
+    onClick={() => exportExcel()}
+    className="p-button-success p-mr-2"
+  />
+  <Button
+    type="button"
+    icon="pi pi-file-pdf"
+    onClick={() => exportPdfFn(title, exportColumns, rows)}
+    className="p-button-warning p-mr-2"
+    data-pr-tooltip="PDF"
+  />
+  </div>
   );
 
   const paginatorProps = usePaging
@@ -217,8 +215,8 @@ const PrimeDataTableInner = ({
           "CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown",
         currentPageReportTemplate:
           "Showing {first} to {last} of {totalRecords}",
-        rows: 50,
-        rowsPerPageOptions: [10, 20, 50, 100, 250],
+        rows: 250,
+        rowsPerPageOptions: [50,100,250,500],
         paginatorLeft: paginatorLeft,
         paginatorRight: paginatorRight,
       }
@@ -228,7 +226,8 @@ const PrimeDataTableInner = ({
     const { field, order } = event;
 
     const getNum = (o) => {
-      return Number(o[field].replace(/(^\$|,)/g, ""));
+      return Number(o[field].replace("$", "").replace("\,",""));
+      
     };
 
     const compare = (oa, ob) => {
@@ -304,14 +303,29 @@ const PrimeDataTableInner = ({
     //onRowSelected(row);
   };
 
+
   return (
     <StyledContainer>
       <div className="datatable-rowgroup-demo datatable-filter-demo datatable-scroll-demo">
-        <Card title={title}>
+
+        
+
+        <Card>
+          <div className="p-d-flex p-jc-between p-ai-center">
+                <h1 className="p-m-0">{title}</h1>
+                <span className="p-input-icon-left">
+                    <i className="pi pi-search" />
+                    {exportheader}
+                </span>
+          </div>
+          <div className="p-datatable-header"> 
+              
+            </div>
           {children}
+          
           <DataTable
             key={`${title}${rows.length}`}
-            //header={header}
+            
             className="p-datatable-sm"
             style={{
               width: "100%",
@@ -342,6 +356,10 @@ const PrimeDataTableInner = ({
                       body: (rowData) => sparkTemplate(rowData, c.field),
                       headerStyle: { width: 150 },
                     }
+                  : c.field.includes("Employee")
+                  ? {
+                    headerStyle: { width: 225 },
+                  }          
                   : c.field === "GridRowHeader"
                   ? {
                       header: "",
