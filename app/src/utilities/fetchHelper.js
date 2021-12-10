@@ -3,20 +3,22 @@ import { apiBaseUrl } from "../constants";
 export const zeeFetch = async (authToken, queryPath, options = {}) => {
   let url = apiBaseUrl() + "/api/" + queryPath;
 
-  const { startDate, endDate } = options;
+  const { startDate, endDate, storeId } = options;
 
   if (options) {
     url = `${url}?`;
   }
 
   if (startDate) {
-    url = `${url}startDate=${startDate.toLocaleDateString('en-US')}&`;
+    url = `${url}startDate=${startDate.toLocaleDateString("en-US")}&`;
   }
 
-  
-
   if (endDate) {
-    url = `${url}endDate=${endDate.toLocaleDateString('en-US')}&`;
+    url = `${url}endDate=${endDate.toLocaleDateString("en-US")}&`;
+  }
+
+  if (storeId) {
+    url = `${url}storeId=${storeId}&`;
   }
 
   const response = await fetch(url, {

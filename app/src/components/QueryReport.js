@@ -207,6 +207,8 @@ export const QueryReport = ({
   useDateFilter = true,
   useSalonsFilter = true,
   sortColumns = true,
+  queryOptions = {},
+  useSalonGroups = true,
 }) => {
   const { user } = useContext(UserContext);
   const queryClient = useQueryClient();
@@ -265,7 +267,7 @@ export const QueryReport = ({
   );
 
   const queryId = [queryPath, startDate.toDateString(), endDate.toDateString()];
-  let options = {};
+  let options = queryOptions;
   if (useDateFilter) {
     options = { ...options, startDate, endDate };
   }
@@ -415,7 +417,7 @@ export const QueryReport = ({
               ) : (
                 <div />
               )}
-              {useSalonsFilter ? (
+              {useSalonsFilter && useSalonGroups ? (
                 <FilterCol>
                   <FilterDiv title={"Salon Groups"}>
                     <StyledSelect
@@ -447,7 +449,9 @@ export const QueryReport = ({
             {children
               ? React.cloneElement(
                   children,
-                  data ? childPropsFunction(data) : undefined
+                  data && childPropsFunction
+                    ? childPropsFunction(data)
+                    : undefined
                 )
               : undefined}
           </Report>

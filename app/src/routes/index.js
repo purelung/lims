@@ -23,6 +23,9 @@ const EmployeeMetrics = async(() =>
 const SalonSchedules = async(() =>
   import("../pages/dashboards/SalonSchedules")
 );
+const PredictiveSchedule = async(() =>
+  import("../pages/dashboards/PredictiveSchedule")
+);
 
 // Reports
 const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
@@ -75,6 +78,11 @@ const dashboardRoutes = (user) => {
         path: "/dashboard/salon-schedules",
         name: "Salon Schedules",
         component: SalonSchedules,
+      },
+      {
+        path: "/dashboard/predictive-schedule",
+        name: "Predictive Schedule",
+        component: PredictiveSchedule,
       },
     ],
   };
