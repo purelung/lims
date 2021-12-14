@@ -4,6 +4,7 @@ import {
   PieChart as PieChartIcon,
   Sliders as SlidersIcon,
   Users as UsersIcon,
+  CheckSquare as CheckSquareIcon,
 } from "react-feather";
 
 // Auth
@@ -16,7 +17,8 @@ import Page500 from "../pages/auth/Page500";
 // Dashboards
 const Landing = async(() => import("../pages/dashboards/Landing"));
 const SalonMetrics = async(() => import("../pages/dashboards/SalonMetrics"));
-const MetricsDetail = async(() => import("../pages/dashboards/MetricsDetail"));
+const MetricsDetail = async(() => import("../pages/reports/MetricsDetail"));
+const MetricsDetailGroup = async(() => import("../pages/reports/MetricsDetailGroup"));
 const EmployeeMetrics = async(() =>
   import("../pages/dashboards/EmployeeMetrics")
 );
@@ -61,12 +63,6 @@ const dashboardRoutes = (user) => {
         path: "/dashboard/salon-metrics",
         name: "Salon Metrics",
         component: SalonMetrics,
-      },
-      {
-        path: "/dashboard/metrics-detail",
-        name: "Metrics Detail",
-        authorized: user.userRoleId > 3,
-        component: MetricsDetail,
       },
       {
         path: "/dashboard/employee-metrics",
@@ -127,7 +123,7 @@ const reportRoutes = (user) => {
   return {
     path: "/reports",
     name: "Reports",
-    icon: PieChartIcon,
+    icon: CheckSquareIcon,
     children: [
       {
         path: "/reports/avg-guests",
@@ -153,6 +149,29 @@ const reportRoutes = (user) => {
         path: "/reports/schedule-audit",
         name: "Schedule Audit",
         component: ScheduleAudit,
+      },
+    ],
+  };
+};
+
+const mgmtreportRoutes = (user) => {
+  return {
+    path: "/mgmtreports",
+    name: "Mgmt Reports",
+    authorized: user.userRoleId > 3,
+    icon: PieChartIcon,
+    children: [
+      {
+        path: "/mgmtreports/metrics-detail",
+        name: "Metrics Detail",
+        authorized: user.userRoleId > 3,
+        component: MetricsDetail,
+      },
+      {
+        path: "/mgmtreports/metrics-detail-group",
+        name: "Metrics Detail Group",
+        authorized: user.userRoleId > 3,
+        component: MetricsDetailGroup,
       },
     ],
   };
@@ -200,6 +219,7 @@ export const getAuthorizedRoutes = (user) => {
   const temp = [
     dashboardRoutes(user),
     reportRoutes(user),
+    mgmtreportRoutes(user),
     storeAdminRoutes(user),
   ];
 
