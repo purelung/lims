@@ -15,3 +15,7 @@ export const sortByName = (a, b) => {
 export const unique = (value, index, self) => {
   return self.indexOf(value) === index;
 };
+
+export const uniqueObject = (value, index, self, field) => {
+  return self.findIndex((e) => e[field] === value[field]) === index;
+};
