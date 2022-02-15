@@ -39,6 +39,7 @@ const BusinessPerformance = async(() =>
 );
 const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
 const AVGGuests = async(() => import("../pages/reports/AVGGuests"));
+const apEmployee = async(() => import("../pages/reports/apEmployee"));
 
 // Store Admin
 const Users = async(() => import("../pages/store-admin/users"));
@@ -161,6 +162,12 @@ const mgmtreportRoutes = (user) => {
     authorized: user.userRoleId > 3,
     icon: PieChartIcon,
     children: [
+      {
+        path: "/mgmtreports/ap-employee",
+        name: "AP - Employee",
+        authorized: user.userRoleId > 3,
+        component: apEmployee,
+      },
       {
         path: "/mgmtreports/metrics-detail",
         name: "Metrics Detail",
