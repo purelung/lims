@@ -167,12 +167,12 @@ const mgmtreportRoutes = (user) => {
         authorized: user.userRoleId > 3,
         component: CustomerMetrics,
       },
-      {
-        path: "/mgmtreports/inventory",
-        name: "Inventory",
-        authorized: user.userRoleId > 3,
-        component: Inventory,
-      },
+      //{
+        //path: "/mgmtreports/inventory",
+        //name: "Inventory",
+        //authorized: user.userRoleId > 3,
+        //component: Inventory,
+      //},
       {
         path: "/mgmtreports/metrics-detail",
         name: "Metrics Detail",
