@@ -17,26 +17,18 @@ import Page500 from "../pages/auth/Page500";
 // Dashboards
 const Landing = async(() => import("../pages/dashboards/Landing"));
 const SalonMetrics = async(() => import("../pages/dashboards/SalonMetrics"));
-const MetricsDetail = async(() => import("../pages/reports/MetricsDetail"));
-const MetricsDetailGroup = async(() => import("../pages/reports/MetricsDetailGroup"));
-const EmployeeMetrics = async(() =>
-  import("../pages/dashboards/EmployeeMetrics")
-);
-const SalonSchedules = async(() =>
-  import("../pages/dashboards/SalonSchedules")
-);
-const PredictiveSchedule = async(() =>
-  import("../pages/dashboards/PredictiveSchedule")
-);
+const EmployeeMetrics = async(() => import("../pages/dashboards/EmployeeMetrics"));
+const SalonSchedules = async(() => import("../pages/dashboards/SalonSchedules"));
+const PredictiveSchedule = async(() => import("../pages/dashboards/PredictiveSchedule"));
 
 // Reports
 const SalonRankings = async(() => import("../pages/reports/SalonRankings"));
-const EmployeeRankings = async(() =>
-  import("../pages/reports/EmployeeRankings")
-);
-const BusinessPerformance = async(() =>
-  import("../pages/reports/BusinessPerformance")
-);
+const CustomerMetrics = async(() => import("../pages/reports/CustomerMetrics"));
+const Inventory = async(() => import("../pages/reports/Inventory"));
+const MetricsDetail = async(() => import("../pages/reports/MetricsDetail"));
+const MetricsDetailGroup = async(() => import("../pages/reports/MetricsDetailGroup"));
+const EmployeeRankings = async(() => import("../pages/reports/EmployeeRankings"));
+const BusinessPerformance = async(() => import("../pages/reports/BusinessPerformance"));
 const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
 const AVGGuests = async(() => import("../pages/reports/AVGGuests"));
 const apEmployee = async(() => import("../pages/reports/apEmployee"));
@@ -162,11 +154,24 @@ const mgmtreportRoutes = (user) => {
     authorized: user.userRoleId > 3,
     icon: PieChartIcon,
     children: [
+
       {
         path: "/mgmtreports/ap-employee",
         name: "AP - Employee",
         authorized: user.userRoleId > 3,
         component: apEmployee,
+      },
+      {
+        path: "/mgmtreports/customer-metrics",
+        name: "Customer Metrics",
+        authorized: user.userRoleId > 3,
+        component: CustomerMetrics,
+      },
+      {
+        path: "/mgmtreports/inventory",
+        name: "Inventory",
+        authorized: user.userRoleId > 3,
+        component: Inventory,
       },
       {
         path: "/mgmtreports/metrics-detail",
