@@ -25,6 +25,7 @@ jobs:
           python-version: '2.7' 
       - run: python -V
       - run: which python
+      - run: npm config set python /opt/hostedtoolcache/Python/2.7.18/x64/bin/python
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
