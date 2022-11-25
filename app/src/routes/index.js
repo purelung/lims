@@ -32,6 +32,7 @@ const BusinessPerformance = async(() => import("../pages/reports/BusinessPerform
 const ScheduleAudit = async(() => import("../pages/reports/ScheduleAudit"));
 const AVGGuests = async(() => import("../pages/reports/AVGGuests"));
 const apEmployee = async(() => import("../pages/reports/apEmployee"));
+const BestDay = async(() => import("../pages/reports/BestDay"));
 
 // Store Admin
 const Users = async(() => import("../pages/store-admin/users"));
@@ -160,6 +161,12 @@ const mgmtreportRoutes = (user) => {
         name: "AP - Employee",
         authorized: user.userRoleId > 3,
         component: apEmployee,
+      },
+      {
+        path: "/mgmtreports/best-day",
+        name: "Best Day",
+        authorized: user.userRoleId > 3,
+        component: BestDay,
       },
       {
         path: "/mgmtreports/customer-metrics",
