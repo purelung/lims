@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '2.7' 
+      - run: python -V
+      - run: which python
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
