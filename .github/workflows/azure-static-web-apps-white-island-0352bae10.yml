@@ -22,7 +22,7 @@ jobs:
           submodules: true
       - uses: actions/setup-python@v4
         with:
-          python-version: '2.7.18' 
+          python-version: '2.7.17' 
       - run: python -V
       - run: which python
       - run: npm config set python /opt/hostedtoolcache/Python/2.7.18/x64/bin/python
