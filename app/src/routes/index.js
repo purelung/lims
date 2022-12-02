@@ -125,6 +125,11 @@ const reportRoutes = (user) => {
         component: AVGGuests,
       },
       {
+        path: "/reports/best-day",
+        name: "Best Day",
+        component: BestDay,
+      },
+      {
         path: "/reports/business-performance",
         name: "Business Performance",
         component: BusinessPerformance,
@@ -161,12 +166,6 @@ const mgmtreportRoutes = (user) => {
         name: "AP - Employee",
         authorized: user.userRoleId > 3,
         component: apEmployee,
-      },
-      {
-        path: "/mgmtreports/best-day",
-        name: "Best Day",
-        authorized: user.userRoleId > 3,
-        component: BestDay,
       },
       {
         path: "/mgmtreports/customer-metrics",
