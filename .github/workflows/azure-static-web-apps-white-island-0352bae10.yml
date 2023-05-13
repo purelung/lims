@@ -18,6 +18,9 @@ jobs:
       CI: ""
     steps:
       - uses: actions/checkout@v2
+      - runs:
+        using: 'node16'
+        main: 'main.js'
         with:
           submodules: true
       - uses: actions/setup-python@v4
