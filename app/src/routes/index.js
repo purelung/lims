@@ -61,7 +61,7 @@ const dashboardRoutes = (user) => {
       {
         path: "/dashboard/employee-metrics",
         name: "Employee Metrics",
-        authorized: user.userRoleId > 3,
+        authorized: user.userRoleId < 3,
         component: EmployeeMetrics,
       },
       {
@@ -140,6 +140,12 @@ const reportRoutes = (user) => {
         component: EmployeeRankings,
       },
       {
+        path: "/reports/metrics-detail",
+        name: "Metrics Detail",
+        authorized: user.userRoleId > 4,
+        component: MetricsDetail,
+      },
+      {
         path: "/reports/salon-rankings",
         name: "Salon Rankings",
         component: SalonRankings,
@@ -179,12 +185,6 @@ const mgmtreportRoutes = (user) => {
         //authorized: user.userRoleId > 3,
         //component: Inventory,
       //},
-      {
-        path: "/mgmtreports/metrics-detail",
-        name: "Metrics Detail",
-        authorized: user.userRoleId > 3,
-        component: MetricsDetail,
-      },
       {
         path: "/mgmtreports/metrics-detail-group",
         name: "Metrics Detail Group",

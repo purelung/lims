@@ -11,4 +11,5 @@ export const roles = [
   { value: 2, label: "Owner" },
   { value: 3, label: "SalonAdmin" },
   { value: 4, label: "User" },
+  { value: 5, label: "Market Leader"}
 ];
