@@ -10,6 +10,6 @@ export const roles = [
   { value: 1, label: "SuperAdmin" },
   { value: 2, label: "Owner" },
   { value: 3, label: "SalonAdmin" },
-  { value: 4, label: "User" },
-  { value: 5, label: "Market Leader"}
+  { value: 4, label: "Market Leader" },
+  { value: 5, label: "User"}
 ];
