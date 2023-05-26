@@ -140,10 +140,10 @@ const reportRoutes = (user) => {
         component: EmployeeRankings,
       },
       {
-        path: "/reports/metrics-detail",
-        name: "Metrics Detail",
+        path: "/mgmtreports/metrics-detail-group",
+        name: "Metrics Detail Group",
         authorized: user.userRoleId > 4,
-        component: MetricsDetail,
+        component: MetricsDetailGroup,
       },
       {
         path: "/reports/salon-rankings",
